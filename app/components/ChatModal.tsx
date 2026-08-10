@@ -44,7 +44,7 @@ export default function ChatModal({
         {chatMessages.length === 0 && (
           <div className="text-center text-white/40 py-8">
             <MessageSquare size={32} className="mx-auto mb-3 opacity-30" />
-            <p className="text-base font-medium">Chat con {AI_ASSISTANT_NAME}</p>
+            <p className="font-display text-base font-medium tracking-tighter">Chat con {AI_ASSISTANT_NAME}</p>
             <p className="text-sm text-white/50">Chiedi consigli sulle abitudini, produttività o crescita personale</p>
           </div>
         )}
@@ -109,7 +109,7 @@ export default function ChatModal({
       <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-amber-400 flex items-center justify-center mb-6">
         <Hexagon size={34} strokeWidth={1.5} className="text-white" />
       </div>
-      <h3 className="text-2xl font-normal tracking-tight mb-3">Accesso Richiesto</h3>
+      <h3 className="font-display text-2xl font-medium tracking-tighter mb-3">Accesso Richiesto</h3>
       <p className="text-white/50 mb-8 max-w-sm">
         Accedi o registrati per utilizzare {AI_ASSISTANT_NAME} e chiedere consigli personalizzati sulle tue abitudini.
       </p>
@@ -143,7 +143,7 @@ export default function ChatModal({
             <div className="p-5 border-b border-white/10 flex items-center gap-3">
               <OmniMindAvatar size="md" />
               <div>
-                <h2 className="text-xl font-medium tracking-tight">{AI_ASSISTANT_NAME}</h2>
+                <h2 className="font-display text-xl font-medium tracking-tighter">{AI_ASSISTANT_NAME}</h2>
                 <p className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em]">{AI_ASSISTANT_NAME} · OmniHabit</p>
               </div>
             </div>

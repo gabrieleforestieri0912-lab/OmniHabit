@@ -223,7 +223,7 @@ export default function ChatPage({ onBack, user, habits, onAuthClick }: ChatPage
           >
             <OmniMindAvatar size="lg" />
           </motion.div>
-          <h2 className="text-3xl font-normal tracking-tight mb-4">Accesso Richiesto</h2>
+          <h2 className="font-display text-3xl font-medium tracking-tighter mb-4">Accesso Richiesto</h2>
           <p className="text-white/50 mb-8 max-w-md">
             Accedi o registrati per utilizzare {AI_ASSISTANT_NAME} e chiedere consigli personalizzati sulle tue abitudini.
           </p>
@@ -283,7 +283,7 @@ export default function ChatPage({ onBack, user, habits, onAuthClick }: ChatPage
                 </button>
                 <OmniMindAvatar size="md" />
                 <div className="min-w-0">
-                  <h1 className="text-lg font-medium tracking-tight truncate">{AI_ASSISTANT_NAME}</h1>
+                  <h1 className="font-display text-lg font-medium tracking-tighter truncate">{AI_ASSISTANT_NAME}</h1>
                   <p className="text-xs text-white/40 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                     Online · AI Coach
@@ -317,7 +317,7 @@ export default function ChatPage({ onBack, user, habits, onAuthClick }: ChatPage
                   >
                     <OmniMindAvatar size="lg" />
                   </motion.div>
-                  <h3 className="text-2xl font-normal tracking-tight mb-2">
+                  <h3 className="font-display text-2xl font-medium tracking-tighter mb-2">
                     Ciao, sono {AI_ASSISTANT_NAME}
                   </h3>
                   <p className="text-white/40 mb-8 max-w-md">

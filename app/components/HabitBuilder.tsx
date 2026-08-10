@@ -128,7 +128,7 @@ export default function HabitBuilder({ open, month, existingHabits, onClose, onC
                 <Zap size={18} className="text-white" aria-hidden="true" />
               </div>
               <div className="flex-1">
-                <h2 className="text-lg font-medium tracking-tight text-white">Habit Builder · Le 4 Leggi</h2>
+                <h2 className="font-display text-lg font-medium tracking-tighter text-white">Habit Builder · Le 4 Leggi</h2>
                 <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-white/50">
                   Atomic Habits · James Clear · {month}
                 </p>
@@ -173,7 +173,7 @@ export default function HabitBuilder({ open, month, existingHabits, onClose, onC
                       <div>
                         <div className="flex items-center gap-3 mb-2">
                           <Eye size={18} className="text-white" aria-hidden="true" />
-                          <h3 className="text-xl font-medium tracking-tight text-white">Rendila Ovvia</h3>
+                          <h3 className="font-display text-xl font-medium tracking-tighter text-white">Rendila Ovvia</h3>
                         </div>
                         <p className="text-sm text-white/60 leading-relaxed">
                           Definisci con precisione <em>quando</em> e <em>dove</em> accadrà, e agganciala a un'abitudine
@@ -253,7 +253,7 @@ export default function HabitBuilder({ open, month, existingHabits, onClose, onC
                       <div>
                         <div className="flex items-center gap-3 mb-2">
                           <Brain size={18} className="text-white" aria-hidden="true" />
-                          <h3 className="text-xl font-medium tracking-tight text-white">Rendila Attraente</h3>
+                          <h3 className="font-display text-xl font-medium tracking-tighter text-white">Rendila Attraente</h3>
                         </div>
                         <p className="text-sm text-white/60 leading-relaxed">
                           Ogni azione è un voto per la persona che vuoi diventare. Focalizzati sull'identità, non
@@ -289,7 +289,7 @@ export default function HabitBuilder({ open, month, existingHabits, onClose, onC
                       <div>
                         <div className="flex items-center gap-3 mb-2">
                           <Zap size={18} className="text-white" aria-hidden="true" />
-                          <h3 className="text-xl font-medium tracking-tight text-white">Rendila Facile</h3>
+                          <h3 className="font-display text-xl font-medium tracking-tighter text-white">Rendila Facile</h3>
                         </div>
                         <p className="text-sm text-white/60 leading-relaxed">
                           La regola dei 2 minuti: quando non hai energia, fai <em>solo</em> la versione minima. La
@@ -322,7 +322,7 @@ export default function HabitBuilder({ open, month, existingHabits, onClose, onC
                       <div>
                         <div className="flex items-center gap-3 mb-2">
                           <Gift size={18} className="text-white" aria-hidden="true" />
-                          <h3 className="text-xl font-medium tracking-tight text-white">Rendila Soddisfacente</h3>
+                          <h3 className="font-display text-xl font-medium tracking-tighter text-white">Rendila Soddisfacente</h3>
                         </div>
                         <p className="text-sm text-white/60 leading-relaxed">
                           Una ricompensa immediata rende l'azione piacevole da ripetere. Il check-in sulla streak è già
