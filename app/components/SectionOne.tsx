@@ -66,13 +66,13 @@ export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
       {/* Centered hero content */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 sm:px-8 text-center">
         <Reveal delay={100}>
-          <h1 className="font-display text-[clamp(48px,13vw,200px)] font-normal leading-[1.02] tracking-[-0.024em] text-foreground">
-            Power{' '}
+          <h1 className="font-display text-[clamp(44px,12vw,190px)] font-normal leading-[1.02] tracking-[-0.024em] text-foreground">
+            Omni
             <span
               className="bg-clip-text text-transparent"
               style={{ backgroundImage: 'linear-gradient(to left, #6366f1, #a855f7, #fcd34d)' }}
             >
-              Habits
+              Habit
             </span>
           </h1>
         </Reveal>
