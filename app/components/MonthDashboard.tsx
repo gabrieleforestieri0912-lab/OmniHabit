@@ -187,7 +187,7 @@ export default function MonthDashboard({
               <Trophy size={32} className="text-white" />
             </div>
             <div>
-              <div className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em] mb-1">Livello Attuale</div>
+              <div className="font-display text-sm font-medium tracking-tighter text-white mb-1">Livello Attuale</div>
               <div className="text-4xl md:text-5xl font-normal tracking-tight">LVL {expStats.level}</div>
             </div>
           </div>
@@ -250,7 +250,7 @@ export default function MonthDashboard({
             <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6">
               <Zap size={40} className="text-white/80 animate-pulse" />
             </div>
-            <div className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em] mb-2">Strike Totale Mensile</div>
+            <div className="font-display text-sm font-medium tracking-tighter text-white mb-2">Strike Totale Mensile</div>
             <div className="text-6xl md:text-8xl font-normal tracking-tight">
               {expStats.totalStreak}
             </div>
@@ -258,7 +258,7 @@ export default function MonthDashboard({
           </div>
 
           <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 flex-1">
-            <h4 className="text-xs font-mono uppercase tracking-[0.15em] text-white/50 mb-6">Neuro-Feedback</h4>
+            <h4 className="font-display text-sm sm:text-base font-medium tracking-tighter text-white mb-6">Neuro-Feedback</h4>
             <p className="text-white/60 text-sm leading-relaxed">
               {expStats.totalStreak > 20
                 ? "I tuoi percorsi neurali si stanno mielinizzando rapidamente. Continua a forzare il sistema."
