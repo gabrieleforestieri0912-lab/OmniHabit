@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Loader2, KeyRound } from 'lucide-react';
+import AuthShell, { authInputClass } from '../components/AuthShell';
 import { API_URL } from '../components/constants';
 
 function ResetPasswordForm() {
@@ -47,8 +49,14 @@ function ResetPasswordForm() {
   if (status === 'done') {
     return (
       <div className="text-center">
-        <p className="text-green-400 font-medium text-lg mb-6">Password aggiornata con successo!</p>
-        <Link href="/" className="inline-block px-6 py-3 rounded-full bg-white text-black font-medium text-sm hover:bg-white/85 transition-colors">
+        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-green-500/30 bg-green-500/10">
+          <KeyRound size={26} className="text-green-400" aria-hidden="true" />
+        </div>
+        <p className="mb-6 text-lg font-medium text-green-400">Password aggiornata con successo!</p>
+        <Link
+          href="/"
+          className="inline-block w-full rounded-full bg-white px-6 py-3 text-center text-sm font-medium text-black transition-colors duration-300 hover:bg-white/85"
+        >
           Torna alla Home
         </Link>
       </div>
@@ -56,47 +64,71 @@ function ResetPasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto space-y-4">
-      <h1 className="text-3xl font-normal tracking-tight mb-8 text-center">
-        Reimposta <span className="text-white/40">Password</span>
-      </h1>
-      {error && <p className="text-red-400 text-sm font-medium">{error}</p>}
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Nuova password (min 6 caratteri)"
-        className="w-full rounded-full border border-white/20 bg-white/10 px-5 py-3 outline-none focus:border-white/50 transition-colors font-medium text-sm placeholder:text-white/30"
-        required
-      />
-      <input
-        type="password"
-        value={confirm}
-        onChange={(e) => setConfirm(e.target.value)}
-        placeholder="Conferma nuova password"
-        className="w-full rounded-full border border-white/20 bg-white/10 px-5 py-3 outline-none focus:border-white/50 transition-colors font-medium text-sm placeholder:text-white/30"
-        required
-      />
-      <button
-        type="submit"
-        disabled={status === 'loading' || !token}
-        className="w-full rounded-full bg-white py-3 font-medium text-black hover:bg-white/85 transition-colors disabled:opacity-40 cursor-pointer"
-      >
-        {status === 'loading' ? 'Aggiornamento...' : 'Aggiorna password'}
-      </button>
-      {!token && (
-        <p className="text-center text-white/40 text-xs font-medium">Link non valido: token mancante.</p>
+    <div>
+      <div className="mb-8">
+        <div className="mb-4 inline-flex border-l-2 border-white bg-white/15 px-3 py-1.5 backdrop-blur-md">
+          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white">
+            Reimposta password
+          </span>
+        </div>
+        <h1 className="font-display text-4xl font-medium leading-[1.02] tracking-tight text-white drop-shadow-lg">
+          Nuova password
+        </h1>
+        <p className="mt-3 text-sm leading-relaxed text-white/60">
+          Scegli una nuova password per il tuo account OmniHabit (min 6 caratteri).
+        </p>
+      </div>
+
+      {error && (
+        <p
+          className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-xs font-medium text-red-300"
+          role="alert"
+        >
+          {error}
+        </p>
       )}
-    </form>
+
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Nuova password"
+          className={authInputClass}
+          required
+        />
+        <input
+          type="password"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          placeholder="Conferma nuova password"
+          className={authInputClass}
+          required
+        />
+        <button
+          type="submit"
+          disabled={status === 'loading' || !token}
+          className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-white py-3 font-medium text-black transition-colors duration-300 hover:bg-white/85 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {status === 'loading' && <Loader2 size={15} className="animate-spin" aria-hidden="true" />}
+          {status === 'loading' ? 'Aggiornamento...' : 'Aggiorna password'}
+        </button>
+        {!token && (
+          <p className="text-center text-xs font-medium text-white/40">
+            Link non valido: token mancante.
+          </p>
+        )}
+      </form>
+    </div>
   );
 }
 
 export default function ResetPasswordPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center px-4 py-24">
-      <Suspense fallback={<p className="text-white/40">Caricamento...</p>}>
+    <AuthShell>
+      <Suspense fallback={<p className="text-center text-white/40">Caricamento...</p>}>
         <ResetPasswordForm />
       </Suspense>
-    </div>
+    </AuthShell>
   );
 }
