@@ -213,7 +213,7 @@ export default function ChatPage({ onBack, user, habits, onAuthClick }: ChatPage
   );
 
   return (
-    <div className="fixed inset-0 bg-black flex">
+    <div className="fixed inset-0 bg-background flex">
       {!user ? (
         <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
           <motion.div
