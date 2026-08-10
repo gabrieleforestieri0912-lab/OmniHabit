@@ -11,7 +11,7 @@ export default function FAQSection() {
 
   return (
     <Reveal scale>
-      <section id="faq" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/60 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
+      <section id="faq" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
       <div className="mx-auto max-w-3xl">
         <div className="mb-14 max-w-2xl">
           <Reveal delay={120}>
@@ -34,7 +34,7 @@ export default function FAQSection() {
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <Reveal key={i} delay={i * 80}>
-              <div className="rounded-xl border border-white/15 bg-white/15 backdrop-blur-md overflow-hidden">
+              <div className="rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm overflow-hidden">
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
                   className="w-full flex items-center justify-between gap-4 p-5 text-left transition-colors duration-300 hover:bg-white/5"

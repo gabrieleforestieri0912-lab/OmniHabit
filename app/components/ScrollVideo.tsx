@@ -24,6 +24,9 @@ export default function ScrollVideo() {
     let replayTimer = 0;
 
     const tick = (now: number) => {
+      // Idle guard: never keep burning frames when no fade is running.
+      if (!fadingIn && !fadingOut) return;
+
       const elapsed = start > 0 ? now - start : 0;
       const t = Math.min(1, elapsed / FADE_MS);
 
@@ -32,6 +35,7 @@ export default function ScrollVideo() {
         if (t >= 1) {
           fadingIn = false;
           video.style.opacity = '1';
+          return; // loop stops — playback continues until 'ended'
         }
       } else if (fadingOut) {
         video.style.opacity = String(1 - t);
@@ -44,7 +48,9 @@ export default function ScrollVideo() {
             if (p && typeof p.catch === 'function') p.catch(() => {});
             start = performance.now();
             fadingIn = true;
+            rafId = requestAnimationFrame(tick);
           }, REPLAY_DELAY_MS);
+          return;
         }
       }
 
@@ -60,27 +66,54 @@ export default function ScrollVideo() {
       if (p && typeof p.catch === 'function') p.catch(() => {});
       start = performance.now();
       fadingIn = true;
+      rafId = requestAnimationFrame(tick);
     };
 
     const handleEnded = () => {
       fadingIn = false;
       fadingOut = true;
       start = performance.now();
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        // Tab hidden: stop everything and pause decode to free the GPU.
+        cancelAnimationFrame(rafId);
+        window.clearTimeout(replayTimer);
+        video.pause();
+      } else {
+        if (video.paused) {
+          const p = video.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        }
+        if (fadingIn || fadingOut) {
+          // Resume an in-progress fade.
+          start = performance.now();
+          rafId = requestAnimationFrame(tick);
+        } else if (video.style.opacity === '0') {
+          // We were mid replay-delay when hidden: restart the fade-in so the
+          // video never stays invisible after coming back.
+          start = performance.now();
+          fadingIn = true;
+          rafId = requestAnimationFrame(tick);
+        }
+      }
     };
 
     video.style.opacity = '0';
     video.addEventListener('canplay', beginFadeIn);
     video.addEventListener('ended', handleEnded);
+    document.addEventListener('visibilitychange', handleVisibility);
     // In case `canplay` already fired before the listener was attached (warm cache)
     if (video.readyState >= 3) beginFadeIn();
-
-    rafId = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(rafId);
       window.clearTimeout(replayTimer);
       video.removeEventListener('canplay', beginFadeIn);
       video.removeEventListener('ended', handleEnded);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 

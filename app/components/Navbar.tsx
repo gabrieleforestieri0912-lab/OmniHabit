@@ -40,29 +40,16 @@ export default function Navbar({
   setIsMenuOpen
 }: NavbarProps) {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const lastY = useRef(0);
-  const manualScrollUntil = useRef(0);
 
-  // Hide while scrolling down, reveal while scrolling up. Auto-hide is
-  // suppressed right after a programmatic scroll (nav link click) and while
-  // the mobile menu is open. Also tracks the active section for the underline.
+  // Navbar stays fixed at all times: scrolling only shrinks the pill slightly.
+  // Also tracks the active section for the underline.
   useMotionValueEvent(scrollY, 'change', (y) => {
-    const prev = lastY.current;
-    lastY.current = y;
     setScrolled(y > 24);
-    if (performance.now() < manualScrollUntil.current || isMenuOpen) {
-      setHidden(false);
-    } else if (y > prev && y > 120 && !hidden) {
-      setHidden(true);
-    } else if (y < prev && hidden) {
-      setHidden(false);
-    }
 
     // Active section indicator (home only). The probe sits just below the
     // floating navbar (~96px from the viewport top), independent of viewport
@@ -123,8 +110,6 @@ export default function Navbar({
 
   const scrollToSection = (target: string, e: React.MouseEvent) => {
     e.preventDefault();
-    setHidden(false);
-    manualScrollUntil.current = performance.now() + 800;
     if (currentView !== 'home') {
       onNavClick('home', e);
       setTimeout(() => document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' }), 150);
@@ -137,7 +122,7 @@ export default function Navbar({
   return (
     <motion.header
       initial={{ y: -96, opacity: 0 }}
-      animate={{ y: hidden ? -128 : 0, opacity: 1 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
       className="fixed left-0 right-0 top-4 z-50 mx-auto w-[calc(100%-2rem)] max-w-5xl"
     >

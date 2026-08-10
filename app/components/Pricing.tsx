@@ -138,7 +138,7 @@ export default function PricingSection({ user, onAuthClick }: PricingSectionProp
 
   return (
     <Reveal scale>
-      <section id="pricing" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/60 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
+      <section id="pricing" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 max-w-2xl">
           <Reveal delay={120}>
@@ -164,8 +164,8 @@ export default function PricingSection({ user, onAuthClick }: PricingSectionProp
               <div
                 className={`relative flex h-full flex-col rounded-2xl border p-8 ${
                   plan.popular
-                    ? 'bg-white/20 border-white/40'
-                    : 'bg-white/15 border-white/20'
+                    ? 'bg-white/10 border-white/40'
+                    : 'bg-white/5 border-white/20'
                 }`}
               >
                 {plan.popular && (
@@ -198,7 +198,7 @@ export default function PricingSection({ user, onAuthClick }: PricingSectionProp
                   className={`w-full rounded-full py-3 text-sm font-medium transition-colors duration-300 flex items-center justify-center gap-2 ${
                     plan.popular
                       ? 'bg-white text-black hover:bg-white/85'
-                      : 'border border-white/25 bg-white/15 text-white hover:bg-white/20'
+                      : 'border border-white/25 bg-white/5 text-white hover:bg-white/10'
                   } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {loading ? <Loader2 size={16} className="animate-spin" aria-hidden="true" /> : null}

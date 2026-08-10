@@ -32,7 +32,7 @@ export default function SectionTwo({ onAuthClick, onStart }: SectionTwoProps) {
     <Reveal scale>
       <section
         id="capability"
-        className="min-h-screen supports-[height:100svh]:min-h-[100svh] flex flex-col justify-between px-5 sm:px-8 md:px-12 pt-24 sm:pt-28 pb-12 md:pb-16 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/60 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
+        className="min-h-screen supports-[height:100svh]:min-h-[100svh] flex flex-col justify-between px-5 sm:px-8 md:px-12 pt-24 sm:pt-28 pb-12 md:pb-16 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
       {/* Top row */}
       <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
         <Reveal delay={120}>
@@ -79,7 +79,7 @@ export default function SectionTwo({ onAuthClick, onStart }: SectionTwoProps) {
               </button>
               <button
                 onClick={() => onAuthClick?.('login')}
-                className="rounded-full border border-white/25 bg-white/10 backdrop-blur-md px-5 py-2.5 text-xs sm:text-sm text-white hover:bg-white/20 transition-colors duration-300 cursor-pointer"
+                className="rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-5 py-2.5 text-xs sm:text-sm text-white hover:bg-white/10 transition-colors duration-300 cursor-pointer"
               >
                 Consulenza gratuita
               </button>
@@ -88,7 +88,7 @@ export default function SectionTwo({ onAuthClick, onStart }: SectionTwoProps) {
         </div>
 
         {/* Frosted capability panel */}
-        <div className="w-full max-w-md rounded-2xl border border-white/15 bg-white/10 px-5 sm:px-6 backdrop-blur-md">
+        <div className="w-full max-w-md rounded-2xl border border-white/15 bg-white/5 px-5 sm:px-6 backdrop-blur-sm">
           {capabilities.map((cap, i) => (
             <Reveal key={cap.index} delay={300 + i * 110}>
               <div

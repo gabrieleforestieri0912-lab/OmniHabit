@@ -37,7 +37,7 @@ export default function MonthSelection({
 }: MonthSelectionProps) {
   return (
     <Reveal scale>
-      <section id="months" className={`relative px-5 sm:px-8 md:px-12 py-16 md:py-20 min-h-screen mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/60 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] ${isQuartersView ? 'pt-20 md:pt-24' : ''}`}>
+      <section id="months" className={`relative px-5 sm:px-8 md:px-12 py-16 md:py-20 min-h-screen mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] ${isQuartersView ? 'pt-20 md:pt-24' : ''}`}>
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-12 md:mb-20 flex flex-col items-start gap-6">
@@ -59,7 +59,7 @@ export default function MonthSelection({
             <Reveal delay={320}>
               <button
                 onClick={() => setIsQuartersView(!isQuartersView)}
-                className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/15 backdrop-blur-md px-4 py-2 text-[10px] font-mono uppercase tracking-[0.15em] text-white hover:bg-white/25 transition-colors duration-300 cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 backdrop-blur-sm px-4 py-2 text-[10px] font-mono uppercase tracking-[0.15em] text-white hover:bg-white/15 transition-colors duration-300 cursor-pointer"
                 aria-label={isQuartersView ? 'Visualizza griglia mesi' : 'Visualizza per quadrimestri'}
               >
                 {isQuartersView ? 'Torna alla griglia' : 'Visualizza per quadrimestri'}
@@ -92,8 +92,8 @@ export default function MonthSelection({
                   }}
                   className={`group p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left relative overflow-hidden ${
                     selectedMonth === m
-                      ? 'bg-white/20 border-white/40'
-                      : 'bg-white/15 border-white/20 hover:bg-white/20'
+                      ? 'bg-white/10 border-white/40'
+                      : 'bg-white/5 border-white/20 hover:bg-white/10'
                   }`}
                   aria-label={`Dettagli per ${m}`}
                 >
@@ -141,7 +141,7 @@ export default function MonthSelection({
                         transition={{ delay: i * 0.1 + qIdx * 0.2 }}
                         whileHover={{ x: 5 }}
                         onClick={() => openDashboard(m)}
-                        className={`group p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left bg-white/15 border-white/20 hover:bg-white/20`}
+                        className={`group p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left bg-white/5 border-white/20 hover:bg-white/10`}
                         aria-label={`Dashboard per ${m}`}
                       >
                         <div className="flex items-center justify-between">
@@ -170,7 +170,7 @@ export default function MonthSelection({
                 exit={{ opacity: 0, scale: 0.9 }}
                 className="mx-auto max-w-3xl"
               >
-                <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-6 md:p-10 backdrop-blur-md shadow-xl">
+                <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-6 md:p-10 backdrop-blur-sm shadow-xl">
                   <button
                     onClick={() => setSelectedMonth(null)}
                     className="absolute top-5 right-5 p-2 bg-white/10 hover:bg-white/25 rounded-full transition-all duration-300 cursor-pointer group z-20"
@@ -199,7 +199,7 @@ export default function MonthSelection({
                           value={newHabit}
                           onChange={(e) => setNewHabit(e.target.value)}
                           placeholder="Nuovo obiettivo..."
-                          className="flex-1 rounded-lg border border-white/20 bg-white/10 px-4 py-3 outline-none focus:border-white/50 transition-all font-medium text-sm placeholder:text-white/30"
+                          className="flex-1 rounded-lg border border-white/20 bg-white/5 px-4 py-3 outline-none focus:border-white/50 transition-all font-medium text-sm placeholder:text-white/30"
                           aria-label="Testo nuovo obiettivo"
                         />
                         <button
@@ -213,7 +213,7 @@ export default function MonthSelection({
                       </form>
                       <button
                         onClick={() => onOpenBuilder(selectedMonth || '')}
-                        className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/15 px-6 py-3 text-xs font-medium text-white backdrop-blur-md hover:bg-white/20 transition-colors duration-300 cursor-pointer"
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-6 py-3 text-xs font-medium text-white backdrop-blur-sm hover:bg-white/10 transition-colors duration-300 cursor-pointer"
                       >
                         <Sparkles size={14} aria-hidden="true" />
                         Crea con le 4 Leggi
@@ -235,7 +235,7 @@ export default function MonthSelection({
                           className={`group flex items-center justify-between p-4 rounded-xl border transition-all duration-300 ${
                             habit.completed
                               ? 'bg-green-500/10 border-green-500/30'
-                              : 'bg-white/15 border-white/20 hover:bg-white/20'
+                              : 'bg-white/5 border-white/20 hover:bg-white/10'
                           }`}
                         >
                           <div className="flex items-center gap-4">

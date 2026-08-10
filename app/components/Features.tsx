@@ -49,7 +49,7 @@ export default function FeaturesSection() {
     <Reveal scale>
       <section
         id="features"
-        className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/60 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]"
+        className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]"
       >
       <div className="mx-auto max-w-7xl">
         {/* Header */}
@@ -77,7 +77,7 @@ export default function FeaturesSection() {
         <div className="mb-16 md:mb-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {laws.map((law, i) => (
             <Reveal key={law.title} delay={i * 100}>
-              <div className="h-full rounded-2xl border border-white/15 bg-white/15 backdrop-blur-md p-6 transition-colors duration-300 hover:bg-white/20">
+              <div className="h-full rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 transition-colors duration-300 hover:bg-white/10">
                 <div className="mb-5 flex items-center justify-between">
                   <div className="inline-flex rounded-lg bg-white/15 p-2.5">
                     <law.icon size={20} className="text-white" aria-hidden="true" />
@@ -95,7 +95,7 @@ export default function FeaturesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {features.map((feature, i) => (
             <Reveal key={feature.title} delay={i * 80}>
-              <div className="h-full rounded-2xl border border-white/15 bg-white/15 backdrop-blur-md p-6 transition-colors duration-300 hover:bg-white/20">
+              <div className="h-full rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 transition-colors duration-300 hover:bg-white/10">
                 <div className="mb-5 inline-flex rounded-lg bg-white/15 p-2.5">
                   <feature.icon size={20} className="text-white" aria-hidden="true" />
                 </div>
@@ -117,7 +117,7 @@ export default function FeaturesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {steps.map((step, i) => (
             <Reveal key={step.number} delay={150 + i * 110}>
-              <div className="h-full rounded-2xl border border-white/15 bg-white/15 backdrop-blur-md px-5 py-6">
+              <div className="h-full rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm px-5 py-6">
                 <div className="font-mono text-[11px] tracking-[0.15em] text-white/55">{step.number}</div>
                 <h4 className="mt-2 text-base font-medium text-white">{step.title}</h4>
                 <p className="mt-1.5 text-sm leading-relaxed text-white/70">{step.description}</p>

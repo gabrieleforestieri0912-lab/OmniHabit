@@ -81,7 +81,7 @@ export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
             </button>
             <button
               onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-              className="cursor-pointer rounded-full border border-white/25 bg-white/5 px-[29px] py-[24px] text-sm text-foreground backdrop-blur-md transition-colors duration-300 hover:bg-white/10"
+              className="cursor-pointer rounded-full border border-white/25 bg-white/5 px-[29px] py-[24px] text-sm text-foreground backdrop-blur-sm transition-colors duration-300 hover:bg-white/10"
             >
               Scopri il Metodo
             </button>

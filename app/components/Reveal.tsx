@@ -34,7 +34,7 @@ export default function Reveal({ children, delay = 0, className = '', scale = fa
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all ease-out will-change-transform ${
+      className={`transition-all ease-out ${
         scale ? 'duration-[900ms]' : 'duration-700'
       } ${className} ${
         visible

@@ -26,7 +26,7 @@ interface AIAssistantProps {
 export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
   return (
     <Reveal scale>
-      <section id="ai-assistant" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/60 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
+      <section id="ai-assistant" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
       <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center max-w-7xl">
         {/* Left: content */}
         <div>
@@ -80,7 +80,7 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
 
         {/* Right: chat preview */}
         <Reveal delay={300}>
-          <div className="rounded-2xl border border-white/15 bg-white/15 backdrop-blur-md overflow-hidden">
+          <div className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm overflow-hidden">
             <div className="flex items-center gap-3 border-b border-white/15 p-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15">
                 <Bot size={18} className="text-white" aria-hidden="true" />
@@ -98,7 +98,7 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/15">
                   <Bot size={14} className="text-white" aria-hidden="true" />
                 </div>
-                <div className="rounded-xl bg-white/10 px-4 py-3">
+                <div className="rounded-xl bg-white/5 px-4 py-3">
                   <p className="text-sm text-white/80">Ciao! Sono il tuo AI Coach. Come posso aiutarti oggi?</p>
                 </div>
               </div>
@@ -107,7 +107,7 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white">
                   <span className="font-mono text-[10px] text-black">Tu</span>
                 </div>
-                <div className="rounded-xl border border-white/20 bg-white/10 px-4 py-3">
+                <div className="rounded-xl border border-white/20 bg-white/5 px-4 py-3">
                   <p className="text-sm text-white/80">Come posso migliorare la mia streak?</p>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/15">
                   <Bot size={14} className="text-white" aria-hidden="true" />
                 </div>
-                <div className="rounded-xl bg-white/10 px-4 py-3">
+                <div className="rounded-xl bg-white/5 px-4 py-3">
                   <p className="text-sm text-white/80">
                     Inizia con abitudini piccole e specifiche. 5 minuti al giorno sono più efficaci di
                     2 ore una volta a settimana. Focus sulla consistenza, non sulla durata.
@@ -126,7 +126,7 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
             </div>
 
             <div className="border-t border-white/15 p-4">
-              <div className="flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-3">
+              <div className="flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-4 py-3">
                 <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/40">
                   Prova anche tu...
                 </span>
