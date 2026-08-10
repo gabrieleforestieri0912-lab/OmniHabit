@@ -26,8 +26,12 @@ export default function ChatRoute() {
           headers: { Authorization: `Bearer ${token}` }
         });
       })
-      .then((res) => res.json())
-      .then((data: Habit[]) => {
+      .then((res) => {
+        if (!res.ok) throw new Error('habits unavailable');
+        return res.json();
+      })
+      .then((data: Habit[] | { error?: string }) => {
+        if (!Array.isArray(data)) return;
         const grouped = data.reduce<HabitsMap>((acc, habit) => {
           if (!acc[habit.month]) acc[habit.month] = [];
           acc[habit.month].push(habit);

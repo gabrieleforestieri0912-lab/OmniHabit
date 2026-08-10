@@ -64,12 +64,28 @@ function AppInner() {
 
 
   const fetchHabits = useCallback(async () => {
+    const token = localStorage.getItem('omni_token');
+    // DEV_MODE senza token reale (utente fittizio) → nessun backend disponibile:
+    // evita la chiamata a /api/habits che fallirebbe con 503.
+    if (DEV_MODE && !token) {
+      setHabits({});
+      return;
+    }
     try {
-      const token = localStorage.getItem('omni_token');
       const res = await fetch(`${API_URL}/habits`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      const data = (await res.json()) as Habit[];
+      // API non raggiungibile (es. DB non configurato → 503) o payload non-array:
+      // evita il crash `data.reduce is not a function`.
+      if (!res.ok) {
+        setHabits({});
+        return;
+      }
+      const data = (await res.json()) as Habit[] | { error?: string };
+      if (!Array.isArray(data)) {
+        setHabits({});
+        return;
+      }
       const grouped = data.reduce<HabitsMap>((acc, habit) => {
         if (!acc[habit.month]) acc[habit.month] = [];
         acc[habit.month].push(habit);
@@ -78,6 +94,7 @@ function AppInner() {
       setHabits(grouped);
     } catch (err) {
       console.error('Fetch habits error', err);
+      setHabits({});
     }
   }, []);
 
