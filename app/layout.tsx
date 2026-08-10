@@ -84,8 +84,7 @@ const organizationSchema = {
   url: baseUrl,
   logo: `${baseUrl}/icon.svg`,
   sameAs: [
-    'https://twitter.com/omnihabit',
-    'https://github.com/omnihabit'
+    'https://github.com/gabrieleforestieri0912-lab/OmniHabit'
   ],
   contactPoint: {
     '@type': 'ContactPoint',

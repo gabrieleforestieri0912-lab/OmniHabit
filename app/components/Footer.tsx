@@ -1,19 +1,41 @@
 'use client';
 
-import { Hexagon, Github, Twitter, Mail, Heart, type LucideIcon } from 'lucide-react';
+import { Hexagon, Github, Mail } from 'lucide-react';
 import Reveal from './Reveal';
 import type { View, NavClickHandler } from '../types';
 
 interface FooterProps {
   onNavClick: NavClickHandler;
+  currentView: string;
 }
 
-export default function Footer({ onNavClick }: FooterProps) {
-  const legal: { name: string; view: View | null }[] = [
+export default function Footer({ onNavClick, currentView }: FooterProps) {
+  const legal: { name: string; view: View }[] = [
     { name: 'Privacy Policy', view: 'privacy' },
-    { name: 'Termini di Servizio', view: 'terms' },
-    { name: 'Cookie Policy', view: null }
+    { name: 'Termini di Servizio', view: 'terms' }
   ];
+
+  const company: { name: string; view?: View; href?: string }[] = [
+    { name: 'Il Metodo', view: 'doc' },
+    { name: 'AI Coach', view: 'chat' },
+    { name: 'Contatti', href: 'mailto:info@omnihabit.it' }
+  ];
+
+  // Stesso pattern della Navbar: da qualsiasi view torna in home e scorre alla sezione.
+  const goToSection = (target: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (currentView !== 'home') {
+      onNavClick('home', e);
+      setTimeout(() => document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' }), 150);
+    } else {
+      document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const openPage = (view: View, e: React.MouseEvent) => {
+    e.preventDefault();
+    onNavClick(view, e);
+  };
 
   return (
     <footer className="relative border-t border-white/15 bg-background/70">
@@ -31,13 +53,13 @@ export default function Footer({ onNavClick }: FooterProps) {
             </p>
             <div className="mt-6 flex gap-3">
               {[
-                { icon: Twitter, href: '#', name: 'Twitter' },
-                { icon: Github, href: '#', name: 'GitHub' },
+                { icon: Github, href: 'https://github.com/gabrieleforestieri0912-lab/OmniHabit', name: 'GitHub', external: true },
                 { icon: Mail, href: 'mailto:info@omnihabit.it', name: 'Email' }
               ].map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
+                  {...(social.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 border border-white/15 text-white/50 hover:text-white hover:bg-white/20 transition-colors duration-300"
                   aria-label={social.name}
                 >
@@ -52,12 +74,16 @@ export default function Footer({ onNavClick }: FooterProps) {
             <h4 className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/50 mb-4">Prodotto</h4>
             <ul className="space-y-3">
               {[
-                { name: 'Metodo', href: '#features' },
-                { name: 'Timeline', href: '#months' },
-                { name: 'Pricing', href: '#pricing' }
+                { name: 'Metodo', target: 'features' },
+                { name: 'Timeline', target: 'months' },
+                { name: 'Pricing', target: 'pricing' }
               ].map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-white/40 hover:text-white transition-colors duration-300">
+                  <a
+                    href={`#${link.target}`}
+                    onClick={(e) => goToSection(link.target, e)}
+                    className="text-sm text-white/40 hover:text-white transition-colors duration-300"
+                  >
                     {link.name}
                   </a>
                 </li>
@@ -69,9 +95,21 @@ export default function Footer({ onNavClick }: FooterProps) {
           <div>
             <h4 className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/50 mb-4">Azienda</h4>
             <ul className="space-y-3">
-              {['Chi Siamo', 'Blog', 'Contatti'].map((name) => (
-                <li key={name}>
-                  <span className="text-sm text-white/40">{name}</span>
+              {company.map((link) => (
+                <li key={link.name}>
+                  {link.view ? (
+                    <a
+                      href="#"
+                      onClick={(e) => openPage(link.view as View, e)}
+                      className="text-sm text-white/40 hover:text-white transition-colors duration-300"
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <a href={link.href} className="text-sm text-white/40 hover:text-white transition-colors duration-300">
+                      {link.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -85,10 +123,7 @@ export default function Footer({ onNavClick }: FooterProps) {
                 <li key={link.name}>
                   <a
                     href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (link.view && onNavClick) onNavClick(link.view);
-                    }}
+                    onClick={(e) => openPage(link.view, e)}
                     className="text-sm text-white/40 hover:text-white transition-colors duration-300"
                   >
                     {link.name}
@@ -103,9 +138,6 @@ export default function Footer({ onNavClick }: FooterProps) {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-white/15 pt-8">
           <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/30">
             © 2026 OmniHabit. Tutti i diritti riservati.
-          </p>
-          <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/30 flex items-center gap-1.5">
-            Made with <Heart size={11} className="text-red-500" aria-hidden="true" /> for the 1%
           </p>
           </div>
         </div>

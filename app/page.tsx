@@ -607,7 +607,7 @@ body: JSON.stringify({
          ) : null}
       </AnimatePresence>
 
-      {currentView !== 'chat' && <Footer onNavClick={handleNavClick} />}
+      {currentView !== 'chat' && <Footer onNavClick={handleNavClick} currentView={currentView} />}
     </div>
   );
   }
