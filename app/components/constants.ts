@@ -3,12 +3,6 @@ export const months = [
   'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
 ];
 
-export const quarters = [
-  months.slice(0, 4),
-  months.slice(4, 8),
-  months.slice(8, 12)
-];
-
 export const COLORS = ['#ffffff', '#1a1a1a'];
 
 export const API_URL = '/api';

@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, LayoutGrid, Zap, X, Plus, Trash2, CheckCircle2, Circle, TrendingUp, Sparkles } from 'lucide-react';
-import { months, quarters } from './constants';
+import { months } from './constants';
 import Reveal from './Reveal';
 import type { HabitsMap } from '../types';
 
@@ -35,6 +36,30 @@ export default function MonthSelection({
   deleteHabit,
   onOpenBuilder
 }: MonthSelectionProps) {
+  // Mese corrente calcolato SOLO lato client (dopo il mount) per evitare
+  // hydration mismatch tra server (UTC) e browser (fusi diversi sul cambio mese)
+  const [currentMonthIndex, setCurrentMonthIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentMonthIndex(new Date().getMonth());
+  }, []);
+
+  const currentMonthName = currentMonthIndex != null ? months[currentMonthIndex] : null;
+
+  // Timeline che parte dal mese corrente per incentivare a iniziare subito
+  const orderedMonths = useMemo(() => {
+    if (currentMonthIndex == null) return months;
+    return [...months.slice(currentMonthIndex), ...months.slice(0, currentMonthIndex)];
+  }, [currentMonthIndex]);
+
+  const orderedQuarters = useMemo(() => {
+    const chunks: string[][] = [];
+    for (let i = 0; i < orderedMonths.length; i += 4) {
+      chunks.push(orderedMonths.slice(i, i + 4));
+    }
+    return chunks;
+  }, [orderedMonths]);
+
   return (
     <Reveal scale>
       <section id="months" className={`relative px-5 sm:px-8 md:px-12 py-16 md:py-20 min-h-screen mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] ${isQuartersView ? 'pt-20 md:pt-24' : ''}`}>
@@ -78,7 +103,9 @@ export default function MonthSelection({
               exit={{ opacity: 0, x: 20 }}
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5 mb-14"
             >
-              {months.map((m, i) => (
+              {orderedMonths.map((m, i) => {
+                const isCurrent = currentMonthName != null && m === currentMonthName;
+                return (
                 <motion.button
                   key={m}
                   initial={{ opacity: 0, y: 30 }}
@@ -93,17 +120,24 @@ export default function MonthSelection({
                   className={`group p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left relative overflow-hidden ${
                     selectedMonth === m
                       ? 'bg-white/10 border-white/40'
-                      : 'bg-white/5 border-white/20 hover:bg-white/10'
+                      : isCurrent
+                        ? 'bg-white/10 border-white/50 hover:bg-white/15'
+                        : 'bg-white/5 border-white/20 hover:bg-white/10'
                   }`}
                   aria-label={`Dettagli per ${m}`}
                 >
-                  <div className={`mb-4 w-9 h-9 rounded-lg flex items-center justify-center ${selectedMonth === m ? 'bg-white text-black' : 'bg-white/15 text-white/70'}`}>
+                  {isCurrent && (
+                    <span className="absolute top-3 right-3 font-mono text-[9px] uppercase tracking-[0.15em] text-black bg-white rounded-full px-2 py-0.5 animate-pulse">
+                      Inizia qui
+                    </span>
+                  )}
+                  <div className={`mb-4 w-9 h-9 rounded-lg flex items-center justify-center ${selectedMonth === m || isCurrent ? 'bg-white text-black' : 'bg-white/15 text-white/70'}`}>
                     <Calendar size={15} strokeWidth={2} aria-hidden="true" />
                   </div>
                   <span className="text-lg font-medium text-white block tracking-tight">{m}</span>
                   <div className="flex flex-col gap-1 mt-2">
                     <div className="font-mono text-[10px] text-white/50 uppercase tracking-[0.15em] flex items-center gap-2">
-                      <div className={`w-1 h-1 rounded-full ${selectedMonth === m ? 'bg-white animate-pulse' : 'bg-white/20'}`} />
+                      <div className={`w-1 h-1 rounded-full ${selectedMonth === m ? 'bg-white animate-pulse' : isCurrent ? 'bg-white/80 animate-pulse' : 'bg-white/20'}`} />
                       {(habits[m] || []).length} Goals
                     </div>
                     <div className="font-mono text-[10px] text-white/70 uppercase tracking-[0.15em] flex items-center gap-2">
@@ -112,7 +146,8 @@ export default function MonthSelection({
                     </div>
                   </div>
                 </motion.button>
-              ))}
+                );
+              })}
             </motion.div>
           ) : (
             <motion.div
@@ -122,7 +157,7 @@ export default function MonthSelection({
               exit={{ opacity: 0, y: -20 }}
               className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-14"
             >
-              {quarters.map((qMonths, qIdx) => (
+              {orderedQuarters.map((qMonths, qIdx) => (
                 <div key={qIdx} className="space-y-4">
                   <div className="flex items-center gap-3 mb-5">
                     <div className="w-8 h-8 rounded-md bg-white/15 flex items-center justify-center">
@@ -133,7 +168,9 @@ export default function MonthSelection({
                     </h4>
                   </div>
                   <div className="flex flex-col gap-3">
-                    {qMonths.map((m, i) => (
+                    {qMonths.map((m, i) => {
+                      const isCurrent = currentMonthName != null && m === currentMonthName;
+                      return (
                       <motion.button
                         key={m}
                         initial={{ opacity: 0, x: -20 }}
@@ -141,7 +178,9 @@ export default function MonthSelection({
                         transition={{ delay: i * 0.1 + qIdx * 0.2 }}
                         whileHover={{ x: 5 }}
                         onClick={() => openDashboard(m)}
-                        className={`group p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left bg-white/5 border-white/20 hover:bg-white/10`}
+                        className={`group p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left ${
+                          isCurrent ? 'bg-white/10 border-white/50 hover:bg-white/15' : 'bg-white/5 border-white/20 hover:bg-white/10'
+                        }`}
                         aria-label={`Dashboard per ${m}`}
                       >
                         <div className="flex items-center justify-between">
@@ -149,10 +188,18 @@ export default function MonthSelection({
                             <span className="text-base md:text-lg font-medium text-white">{m}</span>
                             <div className="font-mono text-[10px] text-white/50 mt-0.5 uppercase tracking-[0.15em]">Apri dashboard →</div>
                           </div>
-                          <div className="font-mono text-[10px] text-white/60">{(habits[m] || []).length} Goals</div>
+                          <div className="flex items-center gap-3">
+                            {isCurrent && (
+                              <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-black bg-white rounded-full px-2 py-0.5 animate-pulse">
+                                Ora
+                              </span>
+                            )}
+                            <span className="font-mono text-[10px] text-white/60">{(habits[m] || []).length} Goals</span>
+                          </div>
                         </div>
                       </motion.button>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ))}
