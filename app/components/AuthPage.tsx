@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import AuthShell, { authInputClass } from './AuthShell';
 import { API_URL } from './constants';
 import type { AuthMode } from '../types';
@@ -17,6 +17,7 @@ export default function AuthPage({ mode }: AuthPageProps) {
   const isLogin = mode === 'login';
 
   const [form, setForm] = useState({ username: '', email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -135,16 +136,32 @@ export default function AuthPage({ mode }: AuthPageProps) {
           className={authInputClass}
           aria-label="Email"
         />
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          minLength={isLogin ? undefined : 6}
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          className={authInputClass}
-          aria-label="Password"
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            required
+            minLength={isLogin ? undefined : 6}
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            className={`${authInputClass} pr-12`}
+            aria-label="Password"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer rounded-full p-1.5 text-white/40 transition-colors duration-300 hover:text-white"
+            aria-label={showPassword ? 'Nascondi password' : 'Mostra password'}
+            aria-pressed={showPassword}
+            tabIndex={-1}
+          >
+            {showPassword ? (
+              <EyeOff size={17} aria-hidden="true" />
+            ) : (
+              <Eye size={17} aria-hidden="true" />
+            )}
+          </button>
+        </div>
         <button
           type="submit"
           disabled={loading}
