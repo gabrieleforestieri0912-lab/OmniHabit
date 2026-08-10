@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, Loader2, Check, Save, BookOpen } from 'lucide-react';
+import { X, Sparkles, Loader2, Save, BookOpen } from 'lucide-react';
 import { API_URL } from './constants';
 import Chip from './Chip';
 import type { User, AuthMode, GeneratedPlan } from '../types';

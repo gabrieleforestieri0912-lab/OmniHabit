@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Shield, FileText, Lock, Eye, Trash2, Mail, Phone, MapPin, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, Shield, FileText, Lock, Eye, Trash2, Mail, type LucideIcon } from 'lucide-react';
 import { useGoBack } from './useGoBack';
 
 interface PrivacyPageProps {

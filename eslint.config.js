@@ -1,37 +1,31 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
+import { FlatCompat } from '@eslint/eslintrc';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// eslint-config-next 15.x ships legacy configs (extends-based).
+// FlatCompat is the official bridge to the flat config used by ESLint 9.
+const compat = new FlatCompat({ baseDirectory: __dirname });
+
 export default defineConfig([
-  globalIgnores(['.next', 'node_modules']),
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  globalIgnores(['.next', 'node_modules', 'server/dist', 'next-env.d.ts']),
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs.flat.recommended,
-    ],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
     rules: {
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
+      // React Compiler-era rules: noisy false positives on this codebase.
+      // 'off' is safe even if the bundled react-hooks plugin doesn't define them.
       'react-hooks/set-state-in-effect': 'off',
       'react-hooks/immutability': 'off',
-      'no-unused-vars': ['warn', { 
-        'varsIgnorePattern': '^(React|motion|AnimatePresence|PieChart|Pie|Cell|ResponsiveContainer|RechartsTooltip|Plus|Trash2|CheckCircle2|Circle|ChevronRight|BookOpen|Brain|TrendingUp|Zap|Calendar|X|LayoutGrid|Menu|LogIn|LogOut|ShieldCheck|Trophy|Target|ArrowLeft|Loader2|Check|Sparkles|Bot|MessageCircle|MessageSquare|Send|ChevronDown|Clock|Star|ArrowRight|ArrowUp|Heart|Flame|LineChart|Activity|Award|BarChart3|Settings|User|LayoutDashboard|HelpCircle|Footer|Navbar|HeroSection|MonthSelection|DocAccessSection|MonthDashboard|UserDashboard|AuthModal|ChatModal|ChatPage|PlanModal|DocPage|FeaturesSection|FAQSection|AIAssistantSection|PricingSection|PlansPage|Save|Play|Pause|XCircle|Reveal|ScrollVideo|SectionOne|SectionTwo)$',
-        'argsIgnorePattern': '^_'
-      }],
-    },
-  },
+      // Italian copy is full of apostrophes/quotes in JSX text: this rule
+      // adds noise without value for non-English content.
+      'react/no-unescaped-entities': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+      ]
+    }
+  }
 ]);

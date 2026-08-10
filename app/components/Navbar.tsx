@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Menu, X, Hexagon, ChevronDown, LayoutDashboard, MessageSquare, Sparkles, BookOpen, LogOut, GraduationCap, Brain, Target, Send, FileText } from 'lucide-react';
-import Link from 'next/link';
+import { Menu, X, Hexagon, ChevronDown, LayoutDashboard, MessageSquare, Sparkles, BookOpen, LogOut, Brain, Target, Send, FileText } from 'lucide-react';
 import type { User, AuthMode, View, NavClickHandler } from '../types';
 
 interface DropdownItem {

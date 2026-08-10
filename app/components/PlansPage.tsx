@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Calendar, Trash2, Play, Pause, Sparkles, CheckCircle, CheckCircle2, XCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Trash2, Play, Sparkles, CheckCircle } from 'lucide-react';
 import { API_URL } from './constants';
 import { useToast } from './ToastContext';
 import type { User, Plan } from '../types';

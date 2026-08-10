@@ -22,7 +22,7 @@ function openAiChat(messages: AIMessage[], temperature = 0.7): Promise<string> {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`
     },
-    body: JSON.stringify({ model, messages, stream: false })
+    body: JSON.stringify({ model, messages, stream: false, temperature })
   }).then(async (res) => {
     if (!res.ok) {
       const text = await res.text();

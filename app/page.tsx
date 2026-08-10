@@ -9,7 +9,6 @@ import ScrollVideo from './components/ScrollVideo';
 import SectionOne from './components/SectionOne';
 import SectionTwo from './components/SectionTwo';
 import MonthSelection from './components/MonthSelection';
-import DocAccessSection from './components/DocAccess';
 import MonthDashboard from './components/MonthDashboard';
 import UserDashboard from './components/UserDashboard';
 import ChatModal from './components/ChatModal';
@@ -46,7 +45,7 @@ function AppInner() {
   const [isQuartersView, setIsQuartersView] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [habits, setHabits] = useState<HabitsMap>({});
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [newHabit, setNewHabit] = useState('');
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -162,7 +161,7 @@ function AppInner() {
         });
       window.history.replaceState({}, document.title, window.location.pathname);
     }
-  }, []);
+  }, [showToast]);
 
   const handleChatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -436,7 +435,7 @@ body: JSON.stringify({
         router.push('/login'); // Open the dedicated login page if not logged in
       }
     }
-  }, [selectedMonth, currentView, user]); // Add 'user' to dependencies
+  }, [selectedMonth, currentView, user, router]);
 
   const globalStats = getGlobalStats(habits);
   useReminders(habits, user);

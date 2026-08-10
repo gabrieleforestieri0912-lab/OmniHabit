@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
 import { ArrowLeft, LayoutGrid, Trophy, Zap, Target, CheckCircle2, Circle, Plus, Trash2, AlarmClock, Save, AlertTriangle, Sparkles } from 'lucide-react';
-import { COLORS } from './constants';
 import { getExpStats, getPieData, isNeverMissTwiceAtRisk, habitConsistency, daysSinceLastCheckin } from './utils';
 import Chip from './Chip';
 import { useToast } from './ToastContext';
