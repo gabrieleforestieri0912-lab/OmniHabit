@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
           <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-green-500/30 bg-green-500/10">
             <MailCheck size={26} className="text-green-400" aria-hidden="true" />
           </div>
-          <h1 className="font-display text-3xl font-medium leading-[1.05] tracking-tight text-white drop-shadow-lg">
+          <h1 className="font-display text-3xl font-medium leading-[0.95] tracking-tighter text-white drop-shadow-lg">
             Controlla la tua email.
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-white/60">
@@ -64,7 +64,7 @@ export default function ForgotPasswordPage() {
                 Recupero password
               </span>
             </div>
-            <h1 className="font-display text-4xl font-medium leading-[1.02] tracking-tight text-white drop-shadow-lg">
+            <h1 className="font-display text-4xl font-medium leading-[0.95] tracking-tighter text-white drop-shadow-lg">
               Password dimenticata?
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-white/60">

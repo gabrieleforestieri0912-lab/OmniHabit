@@ -155,7 +155,7 @@ export default function PlanModal({
                 <Sparkles size={20} className="text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-medium tracking-tight">Generatore Piani</h2>
+                <h2 className="font-display text-xl font-medium tracking-tighter">Generatore Piani</h2>
                 <p className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em]">AI Habit Planner • OmniMind</p>
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function PlanModal({
                         transition={{ delay: i * 0.1 }}
                         className="bg-white/5 border border-white/10 rounded-2xl p-5"
                       >
-                        <h4 className="text-base font-medium tracking-tight text-white/80 mb-3">{monthPlan.month}</h4>
+                        <h4 className="font-display text-base font-medium tracking-tighter text-white/80 mb-3">{monthPlan.month}</h4>
                         <ul className="space-y-2">
                           {monthPlan.habits.map((habit, j) => {
                             const name = typeof habit === 'string' ? habit : habit.name;

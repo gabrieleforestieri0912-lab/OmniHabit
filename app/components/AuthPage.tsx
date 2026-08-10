@@ -73,7 +73,7 @@ export default function AuthPage({ mode }: AuthPageProps) {
             {isLogin ? 'Accesso' : 'Registrazione'}
           </span>
         </div>
-        <h1 className="font-display text-4xl font-medium leading-[1.02] tracking-tight text-white drop-shadow-lg">
+        <h1 className="font-display text-4xl font-medium leading-[0.95] tracking-tighter text-white drop-shadow-lg">
           {isLogin ? 'Bentornato.' : 'Inizia oggi.'}
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-white/60">
