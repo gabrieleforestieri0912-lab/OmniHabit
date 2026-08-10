@@ -54,6 +54,7 @@ function HabitEditor({ habit, month, onUpdate }: HabitEditorProps) {
     <div className="mt-3 pt-3 border-t border-white/5 space-y-2">
       <div className="flex flex-wrap items-center gap-2">
         <AlarmClock size={12} className="text-white/40" />
+        <span className="text-[9px] font-mono uppercase tracking-[0.15em] text-white/40">Promemoria</span>
         <input
           type="time"
           value={reminderTime}
@@ -61,6 +62,7 @@ function HabitEditor({ habit, month, onUpdate }: HabitEditorProps) {
           className={miniInput}
           aria-label="Orario promemoria"
         />
+        <span className="text-[9px] font-mono uppercase tracking-[0.15em] text-white/40">Cue</span>
         <input
           type="time"
           value={cueTime}
@@ -296,6 +298,12 @@ export default function MonthDashboard({
                   <div>
                     <div className={`text-lg font-medium tracking-tight ${habit.completed ? 'line-through text-white/40' : ''}`}>{habit.name}</div>
                     <div className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em]">Strike: {habit.streak} giorni</div>
+                    {(habit.cueTime || habit.reminderTime) && (
+                      <div className="mt-0.5 flex items-center gap-1 text-[9px] font-mono uppercase tracking-[0.15em] text-white/40">
+                        <AlarmClock size={10} aria-hidden="true" />
+                        {habit.cueTime || habit.reminderTime}
+                      </div>
+                    )}
                     {habit.completed && (
                       <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.15em]">Fatto oggi ✓</div>
                     )}
