@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, LayoutGrid, Zap, X, Plus, Trash2, CheckCircle2, Circle, TrendingUp, Sparkles } from 'lucide-react';
-import { months } from './constants';
+import { useOrderedMonths } from './utils';
 import Reveal from './Reveal';
 import type { HabitsMap } from '../types';
 
@@ -36,29 +35,16 @@ export default function MonthSelection({
   deleteHabit,
   onOpenBuilder
 }: MonthSelectionProps) {
-  // Mese corrente calcolato SOLO lato client (dopo il mount) per evitare
-  // hydration mismatch tra server (UTC) e browser (fusi diversi sul cambio mese)
-  const [currentMonthIndex, setCurrentMonthIndex] = useState<number | null>(null);
+  const { orderedMonths, currentMonthName } = useOrderedMonths();
 
-  useEffect(() => {
-    setCurrentMonthIndex(new Date().getMonth());
-  }, []);
-
-  const currentMonthName = currentMonthIndex != null ? months[currentMonthIndex] : null;
-
-  // Timeline che parte dal mese corrente per incentivare a iniziare subito
-  const orderedMonths = useMemo(() => {
-    if (currentMonthIndex == null) return months;
-    return [...months.slice(currentMonthIndex), ...months.slice(0, currentMonthIndex)];
-  }, [currentMonthIndex]);
-
-  const orderedQuarters = useMemo(() => {
+  // Quadrimestri derivati dalla timeline che parte dal mese corrente
+  const orderedQuarters = (() => {
     const chunks: string[][] = [];
     for (let i = 0; i < orderedMonths.length; i += 4) {
       chunks.push(orderedMonths.slice(i, i + 4));
     }
     return chunks;
-  }, [orderedMonths]);
+  })();
 
   return (
     <Reveal scale>

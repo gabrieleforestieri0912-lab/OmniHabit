@@ -2,8 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ArrowLeft, Trophy, Target, CheckCircle2, Flame, Calendar, Award, Sparkles, Activity, Clock, LineChart, BookOpen, Bot, Circle, type LucideIcon } from 'lucide-react';
-import { months } from './constants';
-import { getGlobalStats, getWeeklyProgress, getMonthlyTrend, getUserLevel, isHabitDoneToday } from './utils';
+import { getGlobalStats, getWeeklyProgress, getMonthlyTrend, getUserLevel, isHabitDoneToday, useOrderedMonths } from './utils';
 import type { HabitsMap, User } from '../types';
 
 interface UserDashboardProps {
@@ -36,6 +35,7 @@ export default function UserDashboard({
   const weeklyProgress = getWeeklyProgress(habits);
   const monthlyTrend = getMonthlyTrend(habits);
   const userLevel = getUserLevel(habits);
+  const { orderedMonths, currentMonthName } = useOrderedMonths();
 
   const todayPending = Object.values(habits).flat().filter((h) => !isHabitDoneToday(h));
 
@@ -220,7 +220,8 @@ export default function UserDashboard({
           <h4 className="text-base font-medium tracking-tight">Riepilogo Mensile</h4>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {months.map((month) => {
+          {orderedMonths.map((month) => {
+            const isCurrent = currentMonthName != null && month === currentMonthName;
             const monthHabits = habits[month] || [];
             const completed = monthHabits.filter(h => h.completed).length;
             const total = monthHabits.length;
@@ -230,8 +231,15 @@ export default function UserDashboard({
                 key={month}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-5"
+                className={`relative bg-white/5 border rounded-2xl p-5 ${
+                  isCurrent ? 'border-white/50 bg-white/10' : 'border-white/10'
+                }`}
               >
+                {isCurrent && (
+                  <span className="absolute top-2.5 right-2.5 font-mono text-[9px] uppercase tracking-[0.15em] text-black bg-white rounded-full px-2 py-0.5 animate-pulse">
+                    Ora
+                  </span>
+                )}
                 <div className="text-sm font-medium tracking-tight mb-2">{month}</div>
                 <div className="flex justify-between items-end">
                   <div>

@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react';
 import { months } from './constants';
 import type { Habit, HabitsMap } from '../types';
 
@@ -141,6 +142,28 @@ export const getUserLevel = (habits: HabitsMap): number => {
   const stats = getGlobalStats(habits);
   return getLevelFromStreak(stats.totalStreak);
 };
+
+/**
+ * Mesi ordinati a partire dal mese corrente, con il nome del mese attuale.
+ * Il mese viene calcolato SOLO lato client (dopo il mount) per evitare
+ * hydration mismatch tra server (UTC) e browser (fusi diversi sul cambio mese).
+ */
+export function useOrderedMonths() {
+  const [currentMonthIndex, setCurrentMonthIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentMonthIndex(new Date().getMonth());
+  }, []);
+
+  const currentMonthName = currentMonthIndex != null ? months[currentMonthIndex] : null;
+
+  const orderedMonths = useMemo(() => {
+    if (currentMonthIndex == null) return months;
+    return [...months.slice(currentMonthIndex), ...months.slice(0, currentMonthIndex)];
+  }, [currentMonthIndex]);
+
+  return { orderedMonths, currentMonthName };
+}
 
 // Atomic Habits (James Clear) logic — single source of truth in lib/utils/atomic.ts
 export { daysSinceLastCheckin, isNeverMissTwiceAtRisk, habitConsistency } from '../../lib/utils/atomic';
