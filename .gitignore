@@ -33,6 +33,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Server build output
+server/dist/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

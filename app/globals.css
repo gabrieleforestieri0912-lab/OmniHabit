@@ -1,28 +1,35 @@
 @import "tailwindcss";
 
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @theme {
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Geist Sans', 'Inter', system-ui, sans-serif;
   --font-mono: 'Inter', system-ui, sans-serif;
-  --color-background: #0a0a0a;
-  --color-foreground: #fff;
-  --color-card: #000;
-  --color-card-foreground: #fff;
-  --color-popover: #000;
-  --color-popover-foreground: #fff;
-  --color-primary: #9333ea;
-  --color-primary-foreground: #fff;
-  --color-secondary: #1a1a2e;
-  --color-secondary-foreground: #fff;
-  --color-muted: #1a1a2e;
+  --font-display: 'General Sans', 'Geist Sans', 'Inter', system-ui, sans-serif;
+
+  /* hsl(260 87% 3%) — deep dark blue-purple */
+  --color-background: #05040e;
+  /* hsl(40 6% 95%) — off-white */
+  --color-foreground: #f3f2f1;
+  /* hsl(40 6% 82%) — hero sub text */
+  --color-hero-sub: #d1d0cd;
+  --color-card: #05040e;
+  --color-card-foreground: #f3f2f1;
+  --color-popover: #05040e;
+  --color-popover-foreground: #f3f2f1;
+  --color-primary: #f3f2f1;
+  --color-primary-foreground: #05040e;
+  --color-secondary: #14121f;
+  --color-secondary-foreground: #f3f2f1;
+  --color-muted: #14121f;
   --color-muted-foreground: #a1a1aa;
-  --color-accent: #1a1a2e;
-  --color-accent-foreground: #fff;
+  --color-accent: #14121f;
+  --color-accent-foreground: #f3f2f1;
   --color-destructive: #ef4444;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-input: rgba(255, 255, 255, 0.1);
-  --color-ring: #9333ea;
+  --color-border: rgba(243, 242, 241, 0.12);
+  --color-input: rgba(243, 242, 241, 0.12);
+  --color-ring: #f3f2f1;
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
@@ -43,32 +50,32 @@
     background: rgba(255, 255, 255, 0.2);
   }
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 0%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 0%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 271 91% 65%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 10% 10%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 240 10% 10%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 240 10% 10%;
-    --accent-foreground: 0 0% 100%;
+    --background: 260 87% 3%;
+    --foreground: 40 6% 95%;
+    --card: 260 87% 3%;
+    --card-foreground: 40 6% 95%;
+    --popover: 260 87% 3%;
+    --popover-foreground: 40 6% 95%;
+    --primary: 40 6% 95%;
+    --primary-foreground: 260 87% 3%;
+    --secondary: 260 20% 10%;
+    --secondary-foreground: 40 6% 95%;
+    --muted: 260 20% 10%;
+    --muted-foreground: 40 6% 65%;
+    --accent: 260 20% 10%;
+    --accent-foreground: 40 6% 95%;
     --destructive: 0 84% 60%;
-    --border: 0 0% 100% / 0.1;
-    --input: 0 0% 100% / 0.1;
-    --ring: 271 91% 65%;
+    --border: 40 6% 95% / 0.12;
+    --input: 40 6% 95% / 0.12;
+    --ring: 40 6% 95%;
     --radius: 0.5rem;
   }
-  
+
   /* Ensure consistent font-family for all elements */
   *, *::before, *::after {
     font-family: var(--font-sans), system-ui, sans-serif;
   }
-  
+
   /* Override any explicit font-family references */
   input, textarea, select, button {
     font-family: var(--font-sans), system-ui, sans-serif !important;
@@ -81,22 +88,45 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: #05040e;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #222;
   border-radius: 10px;
-  border: 2px solid #000;
+  border: 2px solid #05040e;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b21a8; /* Purple-700 */
+  background: #3a3a3a;
 }
 
 @layer components {
   .btn {
-    @apply bg-linear-to-br from-[#667eea] to-[#764ba2] text-white px-6 py-2 rounded-full text-sm cursor-pointer transition-all duration-300 shadow-md hover:-translate-y-0.5 hover:shadow-lg active:scale-95; /* Reduced padding and font size */
+    @apply bg-white text-black px-6 py-2 rounded-full text-sm cursor-pointer transition-all duration-300 shadow-md hover:-translate-y-0.5 hover:shadow-lg active:scale-95 hover:bg-white/85; /* Reduced padding and font size */
+  }
+
+  /* Liquid glass — frosted surface with a subtle gradient hairline border */
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 }
 
