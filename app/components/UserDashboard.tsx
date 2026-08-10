@@ -13,6 +13,7 @@ interface UserDashboardProps {
   onChatOpen: () => void;
   onPlansOpen: () => void;
   onCheckin: (month: string, id: string) => void;
+  onOpenMonth: (month: string) => void;
 }
 
 interface Achievement {
@@ -29,7 +30,8 @@ export default function UserDashboard({
   onPlanModalOpen,
   onChatOpen,
   onPlansOpen,
-  onCheckin
+  onCheckin,
+  onOpenMonth
 }: UserDashboardProps) {
   const stats = getGlobalStats(habits);
   const weeklyProgress = getWeeklyProgress(habits);
@@ -239,13 +241,20 @@ export default function UserDashboard({
             const total = monthHabits.length;
             const rate = total > 0 ? Math.round((completed / total) * 100) : 0;
             return (
-              <motion.div 
+              <motion.button 
                 key={month}
+                type="button"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className={`relative bg-white/5 border rounded-2xl p-5 ${
-                  isCurrent ? 'border-white/50 bg-white/10' : 'border-white/10'
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => onOpenMonth(month)}
+                className={`group relative bg-white/5 border rounded-2xl p-5 text-left cursor-pointer transition-colors duration-300 ${
+                  isCurrent
+                    ? 'border-white/50 bg-white/10 hover:bg-white/15'
+                    : 'border-white/10 hover:border-white/30 hover:bg-white/10'
                 }`}
+                aria-label={`Apri dashboard per ${month}`}
               >
                 {isCurrent && (
                   <span className="absolute top-2.5 right-2.5 font-mono text-[9px] uppercase tracking-[0.15em] text-black bg-white rounded-full px-2 py-0.5 animate-pulse">
@@ -258,11 +267,16 @@ export default function UserDashboard({
                     <div className="text-xl font-medium">{total}</div>
                     <div className="text-[10px] font-mono text-white/40 uppercase tracking-[0.15em]">obiettivi</div>
                   </div>
-                  <div className={`text-lg font-medium ${rate >= 50 ? 'text-white' : 'text-white/40'}`}>
-                    {rate}%
+                  <div className="flex items-center gap-2">
+                    <div className={`text-lg font-medium ${rate >= 50 ? 'text-white' : 'text-white/40'}`}>
+                      {rate}%
+                    </div>
+                    <span className="hidden sm:block font-mono text-[9px] uppercase tracking-[0.15em] text-white/60 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+                      Apri →
+                    </span>
                   </div>
                 </div>
-              </motion.div>
+              </motion.button>
             );
           })}
         </div>

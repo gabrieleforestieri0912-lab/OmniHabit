@@ -576,6 +576,11 @@ body: JSON.stringify({
              onChatOpen={() => setChatOpen(true)}
              onPlansOpen={() => setCurrentView('plans')}
              onCheckin={toggleHabit}
+             onOpenMonth={(month) => {
+               setSelectedMonth(month);
+               setCurrentView('dashboard');
+               window.scrollTo({ top: 0, behavior: 'smooth' });
+             }}
            />
          ) : currentView === 'chat' ? (
            <ChatPage 
