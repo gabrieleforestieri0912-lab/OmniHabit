@@ -146,7 +146,13 @@ export const getMonthlyTrend = (habits: HabitsMap, currentMonthIndex: number | n
     );
     const maxCheckins = monthHabits.length * daysInMonth(index);
     const rate = maxCheckins > 0 ? Math.round((checkins / maxCheckins) * 100) : 0;
-    return { month: month.slice(0, 3), rate: Math.min(rate, 100) };
+    return {
+      month: month.slice(0, 3),
+      fullMonth: month,
+      rate: Math.min(rate, 100),
+      checkins,
+      days: daysInMonth(index)
+    };
   });
 };
 

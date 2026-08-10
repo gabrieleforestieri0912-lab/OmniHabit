@@ -193,7 +193,19 @@ export default function UserDashboard({
           </div>
           <div className="h-[150px] flex items-end justify-between gap-2 px-2">
             {monthlyTrend.map((month, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1.5">
+              <div key={i} className="group relative flex-1 flex flex-col items-center gap-1.5">
+                {/* Zona hover estesa sopra la barra: evita che il tooltip scompaia quando il mouse sale su di esso */}
+                <div className="hidden sm:block absolute -top-18 left-0 right-0 h-18" aria-hidden="true" />
+
+                {/* Tooltip glass */}
+                <div className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg border border-white/15 bg-background/90 px-3 py-2 text-center opacity-0 shadow-xl backdrop-blur-md transition-all duration-200 sm:block group-hover:translate-y-0 group-hover:opacity-100 group-first:left-0 group-first:translate-x-0 group-last:left-auto group-last:right-0 group-last:translate-x-0">
+                  <div className="text-xs font-medium text-white">{month.fullMonth}</div>
+                  <div className="mt-1 flex flex-col gap-0.5 font-mono text-[9px] uppercase tracking-[0.15em] text-white/60">
+                    <span>{month.checkins} check-in</span>
+                    <span>{month.days} giorni</span>
+                  </div>
+                </div>
+
                 <div className="relative w-full flex justify-center">
                   <motion.div 
                     initial={{ height: 0 }}
