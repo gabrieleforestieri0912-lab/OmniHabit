@@ -75,6 +75,11 @@
     font-family: var(--font-sans), system-ui, sans-serif;
   }
 
+  /* Remove the grey tap flash on mobile and keep native tap responsiveness */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* Override any explicit font-family references */
   input, textarea, select, button {
     font-family: var(--font-sans), system-ui, sans-serif !important;

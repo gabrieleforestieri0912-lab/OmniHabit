@@ -59,7 +59,7 @@ export default function MonthSelection({
             <Reveal delay={320}>
               <button
                 onClick={() => setIsQuartersView(!isQuartersView)}
-                className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 backdrop-blur-sm px-4 py-2 text-[10px] font-mono uppercase tracking-[0.15em] text-white hover:bg-white/15 transition-colors duration-300 cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-white/5 backdrop-blur-sm px-4 py-2.5 text-[10px] font-mono uppercase tracking-[0.15em] text-white hover:bg-white/15 transition-colors duration-300 cursor-pointer"
                 aria-label={isQuartersView ? 'Visualizza griglia mesi' : 'Visualizza per quadrimestri'}
               >
                 {isQuartersView ? 'Torna alla griglia' : 'Visualizza per quadrimestri'}
@@ -173,7 +173,7 @@ export default function MonthSelection({
                 <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-6 md:p-10 backdrop-blur-sm shadow-xl">
                   <button
                     onClick={() => setSelectedMonth(null)}
-                    className="absolute top-5 right-5 p-2 bg-white/10 hover:bg-white/25 rounded-full transition-all duration-300 cursor-pointer group z-20"
+                    className="absolute top-5 right-5 p-2.5 bg-white/10 hover:bg-white/25 rounded-full transition-all duration-300 cursor-pointer group z-20"
                     aria-label="Chiudi dettagli mese"
                   >
                     <X size={16} className="group-hover:rotate-90 transition-transform duration-300" aria-hidden="true" />

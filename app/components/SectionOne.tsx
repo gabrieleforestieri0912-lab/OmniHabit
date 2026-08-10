@@ -14,15 +14,20 @@ interface SectionOneProps {
 }
 
 export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
-  const labels = ['Giorni di streak', 'Obiettivi attivi', 'Completati oggi'];
+  // Short labels on mobile so the strip fits one line at ~320px; full labels from sm: up.
+  const labels = [
+    { short: 'Streak', long: 'Giorni di streak' },
+    { short: 'Attivi', long: 'Obiettivi attivi' },
+    { short: 'Oggi', long: 'Completati oggi' }
+  ];
   const statsValues: number[] | null = user
     ? [stats.totalStreak, stats.totalHabits, stats.completedToday]
     : null;
 
   const renderStats = () => (
-    <span className="flex flex-wrap items-center justify-center gap-x-14 gap-y-6">
+    <span className="flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-14 gap-y-6">
       {labels.map((label, i) => (
-        <Fragment key={label}>
+        <Fragment key={label.long}>
           {i > 0 && <span className="hidden h-12 w-px bg-white/10 md:block" aria-hidden="true" />}
           <span className="flex flex-col items-center gap-1.5">
             <span
@@ -33,7 +38,8 @@ export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
               {statsValues ? <CountUp value={statsValues[i]} delay={i * 150} /> : '—'}
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-foreground/50">
-              {label}
+              <span className="sm:hidden">{label.short}</span>
+              <span className="hidden sm:inline">{label.long}</span>
             </span>
           </span>
         </Fragment>
@@ -50,7 +56,7 @@ export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
           dark halo look at zero per-frame cost. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[527px] w-[984px] -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none absolute top-1/2 left-1/2 h-[440px] w-[120vw] max-w-[984px] sm:h-[527px] sm:w-[984px] -translate-x-1/2 -translate-y-1/2"
         style={{
           background:
             'radial-gradient(ellipse 50% 50% at center, rgba(2,2,8,0.92) 0%, rgba(2,2,8,0.6) 50%, rgba(2,2,8,0.25) 72%, transparent 100%)'

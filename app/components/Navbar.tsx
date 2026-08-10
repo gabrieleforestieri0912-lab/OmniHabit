@@ -136,7 +136,7 @@ export default function Navbar({
       initial={{ y: -96, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="fixed left-0 right-0 top-4 z-50 mx-auto w-[calc(100%-2rem)] max-w-5xl"
+      className="fixed left-0 right-0 top-[max(1rem,env(safe-area-inset-top))] z-50 mx-auto w-[calc(100%-2rem)] max-w-5xl"
     >
       {/* Floating glass pill */}
       <div className="rounded-2xl border border-white/10 bg-background/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md">
@@ -256,9 +256,9 @@ export default function Navbar({
               </button>
             )}
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle — 40px hit area (comfortable on touch screens) */}
             <button
-              className="md:hidden p-1 text-foreground/80 hover:text-foreground transition-colors cursor-pointer"
+              className="md:hidden -mr-1 p-2.5 text-foreground/80 hover:text-foreground transition-colors cursor-pointer"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
