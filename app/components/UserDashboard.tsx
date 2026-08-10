@@ -271,9 +271,7 @@ export default function UserDashboard({
                     <div className={`text-lg font-medium ${rate >= 50 ? 'text-white' : 'text-white/40'}`}>
                       {rate}%
                     </div>
-                    <span className="hidden sm:block font-mono text-[9px] uppercase tracking-[0.15em] text-white/60 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-                      Apri →
-                    </span>
+                    <ChevronRight size={16} className="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" aria-hidden="true" />
                   </div>
                 </div>
               </motion.button>
