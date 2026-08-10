@@ -33,9 +33,9 @@ export default function UserDashboard({
 }: UserDashboardProps) {
   const stats = getGlobalStats(habits);
   const weeklyProgress = getWeeklyProgress(habits);
-  const monthlyTrend = getMonthlyTrend(habits);
   const userLevel = getUserLevel(habits);
-  const { orderedMonths, currentMonthName } = useOrderedMonths();
+  const { orderedMonths, currentMonthName, currentMonthIndex } = useOrderedMonths();
+  const monthlyTrend = getMonthlyTrend(habits, currentMonthIndex);
 
   const todayPending = Object.values(habits).flat().filter((h) => !isHabitDoneToday(h));
 

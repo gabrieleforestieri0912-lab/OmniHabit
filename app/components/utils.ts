@@ -117,14 +117,34 @@ export const getWeeklyProgress = (habits: HabitsMap) => {
   return last7Days.map((d) => ({ ...d, max }));
 };
 
-export const getMonthlyTrend = (habits: HabitsMap) => {
-  return months.slice(0, 6).map((month, i) => {
+/**
+ * Tendenza mensile sugli ultimi 6 mesi a partire dal corrente.
+ * `currentMonthIndex` arriva da useOrderedMonths() (calcolato dopo il mount);
+ * se è null (prerender/SSR) usa i primi 6 mesi di calendario, così il primo
+ * render del server e del client coincidono (niente hydration mismatch).
+ * Gli indici reali (0-11) sono necessari per filtrare i check-in per mese.
+ */
+export const getMonthlyTrend = (habits: HabitsMap, currentMonthIndex: number | null = null) => {
+  const trendMonths: { month: string; index: number }[] = [];
+
+  if (currentMonthIndex == null) {
+    // Fallback deterministico pre-mount: primi 6 mesi di calendario
+    for (let i = 0; i < 6; i += 1) trendMonths.push({ month: months[i], index: i });
+  } else {
+    // Ultimi 6 mesi dal corrente (dal più vecchio al più recente)
+    for (let offset = 5; offset >= 0; offset -= 1) {
+      const realIndex = (currentMonthIndex - offset + 12) % 12;
+      trendMonths.push({ month: months[realIndex], index: realIndex });
+    }
+  }
+
+  return trendMonths.map(({ month, index }) => {
     const monthHabits = habits[month] || [];
     const checkins = monthHabits.reduce(
-      (acc, h) => acc + countCheckinsInMonth(h.completedDates || [], i),
+      (acc, h) => acc + countCheckinsInMonth(h.completedDates || [], index),
       0
     );
-    const maxCheckins = monthHabits.length * daysInMonth(i);
+    const maxCheckins = monthHabits.length * daysInMonth(index);
     const rate = maxCheckins > 0 ? Math.round((checkins / maxCheckins) * 100) : 0;
     return { month: month.slice(0, 3), rate: Math.min(rate, 100) };
   });
@@ -162,7 +182,7 @@ export function useOrderedMonths() {
     return [...months.slice(currentMonthIndex), ...months.slice(0, currentMonthIndex)];
   }, [currentMonthIndex]);
 
-  return { orderedMonths, currentMonthName };
+  return { orderedMonths, currentMonthName, currentMonthIndex };
 }
 
 // Atomic Habits (James Clear) logic — single source of truth in lib/utils/atomic.ts
