@@ -124,10 +124,15 @@ export default function PlansPage({ onBack, user }: PlansPageProps) {
               <BookOpen size={32} className="text-white" />
             </div>
             <div>
-              <h1 className="text-4xl md:text-5xl font-normal tracking-tight leading-[1.05]">
+              <div className="inline-flex border-l-2 border-white bg-white/15 px-3 py-1.5 backdrop-blur-md mb-5">
+                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white">
+                  I Tuoi Piani
+                </span>
+              </div>
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.9] tracking-tighter text-white drop-shadow-lg">
                 Piani <span className="text-white/40">Attivi</span>
               </h1>
-              <p className="text-white/50 mt-1">I tuoi piani di abitudini generati con l'AI</p>
+              <p className="mt-4 max-w-md text-white/80 drop-shadow-md">I tuoi piani di abitudini generati con l'AI</p>
             </div>
           </div>
         </motion.div>

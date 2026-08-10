@@ -70,10 +70,15 @@ export default function UserDashboard({
           >
             <ArrowLeft size={12} /> Torna alla Home
           </motion.button>
-          <h2 className="text-4xl md:text-6xl font-normal leading-[1.05] tracking-tight">
+          <div className="inline-flex border-l-2 border-white bg-white/15 px-3 py-1.5 backdrop-blur-md mb-5">
+            <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white">
+              Panoramica Completa
+            </span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.9] tracking-tighter text-white drop-shadow-lg">
             La Tua <span className="text-white/40">Dashboard</span>
           </h2>
-          <p className="text-white/40 font-mono uppercase tracking-[0.2em] text-[10px] mt-3">Panoramica Completa</p>
+          <p className="text-white/40 font-mono uppercase tracking-[0.2em] text-[10px] mt-4">Il tuo sistema di evoluzione personale</p>
           {user?.isPremium && (
             <span className="inline-flex items-center gap-1 mt-3 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/80 text-[10px] font-mono uppercase tracking-[0.15em]">
               <Award size={12} /> Premium Attivo
@@ -168,7 +173,7 @@ export default function UserDashboard({
             <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
               <Clock size={18} className="text-white" />
             </div>
-            <h4 className="text-base font-medium tracking-tight">Progresso Settimanale</h4>
+            <h4 className="font-display text-base font-medium tracking-tighter">Progresso Settimanale</h4>
           </div>
           <div className="h-[150px] flex items-end justify-between gap-1">
             {weeklyProgress.map((day, i) => (
@@ -191,7 +196,7 @@ export default function UserDashboard({
             <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
               <LineChart size={18} className="text-white" />
             </div>
-            <h4 className="text-base font-medium tracking-tight">Tendenza Mensile</h4>
+            <h4 className="font-display text-base font-medium tracking-tighter">Tendenza Mensile</h4>
           </div>
           <div className="h-[150px] flex items-end justify-between gap-2 px-2">
             {monthlyTrend.map((month, i) => (
@@ -231,7 +236,7 @@ export default function UserDashboard({
           <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
             <Calendar size={18} className="text-white" />
           </div>
-          <h4 className="text-base font-medium tracking-tight">Riepilogo Mensile</h4>
+          <h4 className="font-display text-base font-medium tracking-tighter">Riepilogo Mensile</h4>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {orderedMonths.map((month) => {
@@ -286,7 +291,7 @@ export default function UserDashboard({
           <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
             <Award size={18} className="text-white" />
           </div>
-          <h4 className="text-base font-medium tracking-tight">Achievements Sbloccati</h4>
+          <h4 className="font-display text-base font-medium tracking-tighter">Achievements Sbloccati</h4>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {achievements.map((achievement, i) => (
@@ -318,7 +323,7 @@ export default function UserDashboard({
            <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
              <Calendar size={18} className="text-white" />
            </div>
-           <h4 className="text-base font-medium tracking-tight">Il tuo Oggi</h4>
+           <h4 className="font-display text-base font-medium tracking-tighter">Il tuo Oggi</h4>
            <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.15em]">Da completare: {todayPending.length}</span>
          </div>
          {todayPending.length === 0 ? (
@@ -363,7 +368,7 @@ export default function UserDashboard({
              <Sparkles size={24} className="text-black" />
            </div>
            <div className="text-left flex-1 min-w-0">
-             <div className="text-base font-medium tracking-tight text-black mb-1">Genera Nuovo Piano</div>
+             <div className="font-display text-base font-medium tracking-tighter text-black mb-1">Genera Nuovo Piano</div>
              <div className="text-xs text-black/60">Lascia che l'AI crei un piano personalizzato per te</div>
            </div>
            <ChevronRight size={20} className="text-black/30 shrink-0 transition-all duration-300 group-hover:text-black group-hover:translate-x-0.5" aria-hidden="true" />
@@ -379,7 +384,7 @@ export default function UserDashboard({
              <BookOpen size={24} className="text-white" />
            </div>
            <div className="text-left flex-1 min-w-0">
-             <div className="text-base font-medium tracking-tight mb-1">Piani Attivi</div>
+             <div className="font-display text-base font-medium tracking-tighter mb-1">Piani Attivi</div>
              <div className="text-xs text-white/40">Visualizza e gestisci i tuoi piani di abitudini</div>
            </div>
            <ChevronRight size={20} className="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" aria-hidden="true" />
@@ -395,7 +400,7 @@ export default function UserDashboard({
              <Bot size={24} className="text-white" />
            </div>
            <div className="text-left flex-1 min-w-0">
-             <div className="text-base font-medium tracking-tight mb-1">Chat con AI</div>
+             <div className="font-display text-base font-medium tracking-tighter mb-1">Chat con AI</div>
              <div className="text-xs text-white/40">Chiedi consigli all'assistente virtuale</div>
            </div>
            <ChevronRight size={20} className="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" aria-hidden="true" />

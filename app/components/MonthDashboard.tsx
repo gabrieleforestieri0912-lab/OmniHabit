@@ -157,12 +157,17 @@ export default function MonthDashboard({
         <div>
           <motion.button
             onClick={onBack}
-            className="flex items-center gap-2 text-white/40 hover:text-white font-medium text-[10px] font-mono uppercase tracking-[0.15em] mb-6 transition-colors cursor-pointer"
+            className="flex items-center gap-2 text-white/40 hover:text-white font-medium text-[10px] font-mono uppercase tracking-[0.15em] mb-5 transition-colors cursor-pointer"
             aria-label="Torna alla visione quadrimestri"
           >
             <ArrowLeft size={14} /> Torna ai Quadrimestri
           </motion.button>
-          <h2 className="text-5xl md:text-7xl font-normal leading-[1.05] tracking-tight">
+          <div className="inline-flex border-l-2 border-white bg-white/15 px-3 py-1.5 backdrop-blur-md mb-5">
+            <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white">
+              Dashboard Mensile
+            </span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.9] tracking-tighter text-white drop-shadow-lg">
             {selectedMonth} <span className="text-white/40">2026</span>
           </h2>
           <p className="text-white/40 font-mono uppercase tracking-[0.2em] text-[10px] mt-4">Analisi Biometrica & Evolutiva</p>
@@ -202,7 +207,7 @@ export default function MonthDashboard({
             <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
               <Target size={20} className="text-white" />
             </div>
-            <h3 className="text-xl md:text-3xl font-normal tracking-tight">Completamento Oggi</h3>
+            <h3 className="font-display text-xl md:text-3xl font-medium tracking-tighter">Completamento Oggi</h3>
           </div>
           <div ref={chartRef} className="h-[300px] md:h-[400px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -265,7 +270,7 @@ export default function MonthDashboard({
 
       {/* Monthly Habit List in Dashboard */}
       <div className="mt-16">
-        <h3 className="text-2xl font-normal tracking-tight mb-10 flex items-center gap-4">
+        <h3 className="font-display text-2xl font-medium tracking-tighter mb-10 flex items-center gap-4">
           <LayoutGrid size={24} className="text-white/60" />
           Dettaglio Abitudini
         </h3>

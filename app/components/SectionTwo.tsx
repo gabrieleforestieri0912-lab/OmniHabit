@@ -54,7 +54,7 @@ export default function SectionTwo({ onAuthClick, onStart }: SectionTwoProps) {
       <div className="flex flex-1 flex-col justify-end gap-12 md:flex-row md:items-end md:justify-between md:gap-16">
         <div className="max-w-xl">
           <Reveal delay={180}>
-            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal leading-[1.05] tracking-tight text-white drop-shadow-lg">
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.95] tracking-tighter text-white drop-shadow-lg">
               Impara a vedere
               <br />
               brillantemente.

@@ -61,11 +61,20 @@ export default function MonthSelection({
           </Reveal>
 
           <div className="flex flex-wrap items-center justify-between gap-6 w-full">
-            <Reveal delay={220}>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.9] tracking-tighter text-white drop-shadow-lg">
-                {isQuartersView ? 'La tua evoluzione, anno per anno.' : 'Scegli il tuo mese.'}
-              </h2>
-            </Reveal>
+            <div className="flex flex-col items-start gap-4">
+              <Reveal delay={220}>
+                <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.9] tracking-tighter text-white drop-shadow-lg">
+                  {isQuartersView ? 'La tua evoluzione, anno per anno.' : 'Scegli il tuo mese.'}
+                </h2>
+              </Reveal>
+              <Reveal delay={280}>
+                <p className="mt-1 max-w-md text-white/80 drop-shadow-md">
+                  {isQuartersView
+                    ? 'La timeline parte dal mese corrente: ogni quadrimestre è un gradino della tua evoluzione.'
+                    : 'Parti dal mese corrente e costruisci un\u2019abitudine alla volta — la timeline inizia oggi.'}
+                </p>
+              </Reveal>
+            </div>
 
             <Reveal delay={320}>
               <button

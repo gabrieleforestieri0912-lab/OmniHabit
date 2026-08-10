@@ -76,7 +76,7 @@ export default function DocPage({ selectedDocCategory, setSelectedDocCategory, o
           >
              <div className="flex items-center gap-3 mb-6">
                <div className="w-1.5 h-6 bg-white rounded-full" />
-               <h2 className="text-3xl md:text-5xl font-normal leading-[1.05] tracking-tight">
+               <h2 className="font-display text-3xl md:text-5xl font-medium leading-[0.9] tracking-tighter">
                  {docContent[category].title}
                </h2>
              </div>
