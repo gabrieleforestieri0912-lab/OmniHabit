@@ -32,6 +32,10 @@ import { ToastProvider, useToast } from './components/ToastContext';
 import { useReminders } from './components/useReminders';
 import type { User, Habit, HabitsMap, View, AuthMode, ChatMessage, GeneratedPlan } from './types';
 
+// Imposta a true per testare l'app senza autenticazione.
+// (Crea un utente fittizio e bypassa i redirect al login).
+const DEV_MODE = true;
+
 function AppInner() {
   const { showToast } = useToast();
   const router = useRouter();
@@ -79,6 +83,24 @@ function AppInner() {
   }, []);
 
   const checkAuth = useCallback(async () => {
+    if (DEV_MODE) {
+      // Utente fittizio per testare tutte le funzionalità
+      const mockUser: User = {
+        _id: 'dev-user',
+        username: 'Sviluppatore',
+        email: 'dev@omnihabit.it',
+        avatar: null,
+        level: 5,
+        exp: 50,
+        totalScore: 50,
+        isGoogleAuth: false,
+        isPremium: false
+      };
+      setUser(mockUser);
+      setLoading(false);
+      return;
+    }
+
     const token = localStorage.getItem('omni_token');
     if (token) {
       try {
@@ -376,6 +398,7 @@ body: JSON.stringify({
 
   // Dedicated auth pages: every login/register trigger navigates to /login or /register.
   const goToAuth = (mode: AuthMode) => {
+    if (DEV_MODE) return; // In dev mode, non reindirizzare al login
     router.push(mode === 'register' ? '/register' : '/login');
   };
 

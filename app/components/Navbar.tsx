@@ -219,6 +219,9 @@ export default function Navbar({
             <span className="text-lg sm:text-xl font-medium tracking-tight text-foreground">
               omnihabit
             </span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-amber-400 border border-amber-400/50 rounded-full px-2 py-0.5">
+              DEV
+            </span>
           </button>
 
           {/* Center nav */}
