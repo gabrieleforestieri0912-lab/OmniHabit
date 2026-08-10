@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Trophy, Target, CheckCircle2, Flame, Calendar, Award, Sparkles, Activity, Clock, LineChart, BookOpen, Bot, Circle, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, Trophy, Target, CheckCircle2, Flame, Calendar, Award, Sparkles, Activity, Clock, LineChart, BookOpen, Bot, Circle, ChevronRight, type LucideIcon } from 'lucide-react';
 import { getGlobalStats, getWeeklyProgress, getMonthlyTrend, getUserLevel, isHabitDoneToday, useOrderedMonths } from './utils';
 import type { HabitsMap, User } from '../types';
 
@@ -359,45 +359,48 @@ export default function UserDashboard({
            whileHover={{ scale: 1.02 }}
            whileTap={{ scale: 0.98 }}
            onClick={() => onPlanModalOpen(true)}
-           className="bg-white p-6 rounded-3xl flex items-center gap-4 cursor-pointer hover:bg-white/90 transition-colors"
+           className="group bg-white p-6 rounded-3xl flex items-center gap-4 cursor-pointer hover:bg-white/90 transition-colors text-left"
          >
-           <div className="w-12 h-12 bg-black/10 rounded-xl flex items-center justify-center">
+           <div className="w-12 h-12 bg-black/10 rounded-xl flex items-center justify-center shrink-0">
              <Sparkles size={24} className="text-black" />
            </div>
-           <div className="text-left">
+           <div className="text-left flex-1 min-w-0">
              <div className="text-base font-medium tracking-tight text-black mb-1">Genera Nuovo Piano</div>
              <div className="text-xs text-black/60">Lascia che l'AI crei un piano personalizzato per te</div>
            </div>
+           <ChevronRight size={20} className="text-black/30 shrink-0 transition-all duration-300 group-hover:text-black group-hover:translate-x-0.5" aria-hidden="true" />
          </motion.button>
 
          <motion.button
            whileHover={{ scale: 1.02 }}
            whileTap={{ scale: 0.98 }}
            onClick={onPlansOpen}
-           className="bg-white/5 border border-white/10 p-6 rounded-3xl flex items-center gap-4 cursor-pointer hover:bg-white/10 transition-colors"
+           className="group bg-white/5 border border-white/10 p-6 rounded-3xl flex items-center gap-4 cursor-pointer hover:bg-white/10 transition-colors text-left"
          >
-           <div className="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center">
+           <div className="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0">
              <BookOpen size={24} className="text-white" />
            </div>
-           <div className="text-left">
+           <div className="text-left flex-1 min-w-0">
              <div className="text-base font-medium tracking-tight mb-1">Piani Attivi</div>
              <div className="text-xs text-white/40">Visualizza e gestisci i tuoi piani di abitudini</div>
            </div>
+           <ChevronRight size={20} className="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" aria-hidden="true" />
          </motion.button>
 
          <motion.button
            whileHover={{ scale: 1.02 }}
            whileTap={{ scale: 0.98 }}
            onClick={onChatOpen}
-           className="bg-white/5 border border-white/10 p-6 rounded-3xl flex items-center gap-4 cursor-pointer hover:bg-white/10 transition-colors"
+           className="group bg-white/5 border border-white/10 p-6 rounded-3xl flex items-center gap-4 cursor-pointer hover:bg-white/10 transition-colors text-left"
          >
-           <div className="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center">
+           <div className="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0">
              <Bot size={24} className="text-white" />
            </div>
-           <div className="text-left">
+           <div className="text-left flex-1 min-w-0">
              <div className="text-base font-medium tracking-tight mb-1">Chat con AI</div>
              <div className="text-xs text-white/40">Chiedi consigli all'assistente virtuale</div>
            </div>
+           <ChevronRight size={20} className="text-white/30 shrink-0 transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" aria-hidden="true" />
          </motion.button>
        </div>
     </motion.div>
