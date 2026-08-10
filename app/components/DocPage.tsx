@@ -1,16 +1,26 @@
 'use client';
 
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { docContent } from './constants';
+import { useGoBack } from './useGoBack';
 
 interface DocPageProps {
-  selectedDocCategory: string;
-  setSelectedDocCategory: (category: string) => void;
-  onBack: () => void;
+  selectedDocCategory?: string;
+  setSelectedDocCategory?: (category: string) => void;
+  onBack?: () => void;
 }
 
 export default function DocPage({ selectedDocCategory, setSelectedDocCategory, onBack }: DocPageProps) {
+  // Uso standalone (es. route /metodo): categoria e back gestiti internamente
+  const [internalCategory, setInternalCategory] = useState('introduzione');
+  const goBack = useGoBack();
+
+  const category = selectedDocCategory ?? internalCategory;
+  const setCategory = setSelectedDocCategory ?? setInternalCategory;
+  const handleBack = onBack ?? goBack;
+
   return (
     <motion.div
       key="doc-page"
@@ -33,9 +43,9 @@ export default function DocPage({ selectedDocCategory, setSelectedDocCategory, o
           .map((key) => (
             <button
               key={key}
-              onClick={() => setSelectedDocCategory(key)}
+              onClick={() => setCategory(key)}
               className={`text-left px-5 py-3 rounded-xl font-medium text-xs transition-all cursor-pointer ${
-                selectedDocCategory === key 
+                category === key 
                   ? 'bg-white text-black shadow-lg' 
                   : 'text-white/40 hover:text-white hover:bg-white/10'
               }`}
@@ -46,7 +56,7 @@ export default function DocPage({ selectedDocCategory, setSelectedDocCategory, o
           ))}
         <hr className="my-5 border-white/15" />
         <button 
-          onClick={onBack}
+          onClick={handleBack}
           className="text-left px-5 py-3 text-white/40 hover:text-white font-medium text-[10px] flex items-center gap-2 transition-colors cursor-pointer"
           aria-label="Torna alla Home"
         >
@@ -58,7 +68,7 @@ export default function DocPage({ selectedDocCategory, setSelectedDocCategory, o
       <main className="flex-1 bg-white/5 border border-white/10 rounded-3xl p-6 md:p-10 relative overflow-hidden backdrop-blur-md">
         <AnimatePresence mode="wait">
           <motion.div
-            key={selectedDocCategory}
+            key={category}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -67,25 +77,25 @@ export default function DocPage({ selectedDocCategory, setSelectedDocCategory, o
              <div className="flex items-center gap-3 mb-6">
                <div className="w-1.5 h-6 bg-white rounded-full" />
                <h2 className="text-3xl md:text-5xl font-normal leading-[1.05] tracking-tight">
-                 {docContent[selectedDocCategory].title}
+                 {docContent[category].title}
                </h2>
              </div>
              <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-3xl mb-8">
-               {docContent[selectedDocCategory].content}
+               {docContent[category].content}
              </p>
              
-             {(docContent[selectedDocCategory].insights || docContent[selectedDocCategory].action) && (
+             {(docContent[category].insights || docContent[category].action) && (
                <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
-                 {docContent[selectedDocCategory].insights && (
+                 {docContent[category].insights && (
                    <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
                      <h4 className="text-xs font-mono uppercase tracking-[0.15em] text-white/70 mb-3">Insights</h4>
-                     <p className="text-white/60 text-xs leading-relaxed">{docContent[selectedDocCategory].insights}</p>
+                     <p className="text-white/60 text-xs leading-relaxed">{docContent[category].insights}</p>
                    </div>
                  )}
-                 {docContent[selectedDocCategory].action && (
+                 {docContent[category].action && (
                    <div className="p-6 bg-white/10 rounded-2xl border border-white/15">
                      <h4 className="text-xs font-mono uppercase tracking-[0.15em] text-white/80 mb-3">Action Item</h4>
-                     <p className="text-white/60 text-xs leading-relaxed">{docContent[selectedDocCategory].action}</p>
+                     <p className="text-white/60 text-xs leading-relaxed">{docContent[category].action}</p>
                    </div>
                  )}
                </div>

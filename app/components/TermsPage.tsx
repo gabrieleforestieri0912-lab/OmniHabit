@@ -2,9 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { ArrowLeft, FileText, Scale, Users, CreditCard, AlertTriangle, CheckCircle, XCircle, Mail, type LucideIcon } from 'lucide-react';
+import { useGoBack } from './useGoBack';
 
 interface TermsPageProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 interface Section {
@@ -14,6 +15,8 @@ interface Section {
 }
 
 export default function TermsPage({ onBack }: TermsPageProps) {
+  const goBack = useGoBack();
+  const handleBack = onBack ?? goBack;
   const lastUpdate = '23 Aprile 2026';
 
   const sections: Section[] = [
@@ -123,7 +126,7 @@ export default function TermsPage({ onBack }: TermsPageProps) {
           className="mb-12"
         >
           <button
-            onClick={onBack}
+            onClick={handleBack}
             className="flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-6 font-mono uppercase tracking-[0.15em] text-xs cursor-pointer"
           >
             <ArrowLeft size={18} />

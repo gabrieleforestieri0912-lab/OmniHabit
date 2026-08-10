@@ -1,8 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { Hexagon, Github, Mail } from 'lucide-react';
 import Reveal from './Reveal';
-import type { View, NavClickHandler } from '../types';
+import type { NavClickHandler } from '../types';
 
 interface FooterProps {
   onNavClick: NavClickHandler;
@@ -10,15 +11,15 @@ interface FooterProps {
 }
 
 export default function Footer({ onNavClick, currentView }: FooterProps) {
-  const legal: { name: string; view: View }[] = [
-    { name: 'Privacy Policy', view: 'privacy' },
-    { name: 'Termini di Servizio', view: 'terms' }
+  const legal: { name: string; href: string }[] = [
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Termini di Servizio', href: '/termini' }
   ];
 
-  const company: { name: string; view?: View; href?: string }[] = [
-    { name: 'Il Metodo', view: 'doc' },
-    { name: 'AI Coach', view: 'chat' },
-    { name: 'Contatti', href: 'mailto:info@omnihabit.it' }
+  const company: { name: string; href: string; external?: boolean }[] = [
+    { name: 'Il Metodo', href: '/metodo' },
+    { name: 'AI Coach', href: '/chat' },
+    { name: 'Contatti', href: 'mailto:info@omnihabit.it', external: true }
   ];
 
   // Stesso pattern della Navbar: da qualsiasi view torna in home e scorre alla sezione.
@@ -30,11 +31,6 @@ export default function Footer({ onNavClick, currentView }: FooterProps) {
     } else {
       document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  const openPage = (view: View, e: React.MouseEvent) => {
-    e.preventDefault();
-    onNavClick(view, e);
   };
 
   return (
@@ -97,18 +93,14 @@ export default function Footer({ onNavClick, currentView }: FooterProps) {
             <ul className="space-y-3">
               {company.map((link) => (
                 <li key={link.name}>
-                  {link.view ? (
-                    <a
-                      href="#"
-                      onClick={(e) => openPage(link.view as View, e)}
-                      className="text-sm text-white/40 hover:text-white transition-colors duration-300"
-                    >
-                      {link.name}
-                    </a>
-                  ) : (
+                  {link.external ? (
                     <a href={link.href} className="text-sm text-white/40 hover:text-white transition-colors duration-300">
                       {link.name}
                     </a>
+                  ) : (
+                    <Link href={link.href} className="text-sm text-white/40 hover:text-white transition-colors duration-300">
+                      {link.name}
+                    </Link>
                   )}
                 </li>
               ))}
@@ -121,13 +113,9 @@ export default function Footer({ onNavClick, currentView }: FooterProps) {
             <ul className="space-y-3">
               {legal.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href="#"
-                    onClick={(e) => openPage(link.view, e)}
-                    className="text-sm text-white/40 hover:text-white transition-colors duration-300"
-                  >
+                  <Link href={link.href} className="text-sm text-white/40 hover:text-white transition-colors duration-300">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
