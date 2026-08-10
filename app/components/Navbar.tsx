@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Menu, X, Hexagon, ChevronDown, LayoutDashboard, MessageSquare, Sparkles, BookOpen, LogOut, Brain, Target, Send, FileText } from 'lucide-react';
+import { Menu, X, Hexagon, ChevronDown, ChevronRight, LayoutDashboard, MessageSquare, Sparkles, BookOpen, LogOut, Brain, Target, Send, FileText } from 'lucide-react';
 import type { User, AuthMode, View, NavClickHandler } from '../types';
 
 interface DropdownItem {
   label: string;
+  description?: string;
   icon?: typeof LayoutDashboard;
   href?: string;
   target?: string;
@@ -26,9 +27,9 @@ const links: NavLink[] = [
     target: 'features',
     chevron: true,
     dropdown: [
-      { label: 'Il Metodo', icon: FileText, href: '/metodo' },
-      { label: 'Timeline', icon: Target, target: 'months' },
-      { label: 'Le 4 Leggi', icon: Brain, target: 'features' }
+      { label: 'Il Metodo', description: 'La filosofia OmniHabit', icon: FileText, href: '/metodo' },
+      { label: 'Timeline', description: 'Quadrimestri dal mese corrente', icon: Target, target: 'months' },
+      { label: 'Le 4 Leggi', description: 'Il cuore di Atomic Habits', icon: Brain, target: 'features' }
     ]
   },
   { label: 'Timeline', target: 'months' },
@@ -37,9 +38,9 @@ const links: NavLink[] = [
     target: 'ai-assistant',
     chevron: true,
     dropdown: [
-      { label: 'Chat con AI', icon: Send, href: '/chat' },
-      { label: 'Genera Piano', icon: Sparkles, action: 'plan' },
-      { label: 'AI Assistant', icon: Brain, target: 'ai-assistant' }
+      { label: 'Chat con AI', description: 'Parla con OmniMind', icon: Send, href: '/chat' },
+      { label: 'Genera Piano', description: 'Piani su misura in pochi secondi', icon: Sparkles, action: 'plan' },
+      { label: 'AI Assistant', description: 'La sezione dedicata', icon: Brain, target: 'ai-assistant' }
     ]
   },
   { label: 'Pricing', target: 'pricing' }
@@ -274,23 +275,65 @@ export default function Navbar({
                   <AnimatePresence>
                     {openDropdown === link.label && (
                       <motion.div
-                        initial={{ opacity: 0, y: -4, scale: 0.96 }}
+                        initial={{ opacity: 0, y: 8, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -4, scale: 0.96 }}
-                        transition={{ duration: 0.15, ease: 'easeOut' }}
-                        className="absolute left-0 top-full pt-3"
+                        exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        className="absolute left-0 top-full origin-top-left pt-2"
                       >
-                        <div className="w-56 rounded-xl border border-white/15 bg-background/95 backdrop-blur-xl p-1.5 shadow-2xl">
-                          {link.dropdown.map((item) => (
-                            <button
-                              key={item.label}
-                              onClick={(e) => handleDropdownItem(item, e)}
-                              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs text-white/70 hover:text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer text-left"
+                        <div className="relative">
+                          {/* Connector arrow */}
+                          <div
+                            aria-hidden="true"
+                            className="absolute -top-1 left-7 h-2.5 w-2.5 rotate-45 rounded-[2px] border-l border-t border-white/15 bg-background/95"
+                          />
+                          <div className="w-64 overflow-hidden rounded-2xl border border-white/15 bg-background/95 shadow-[0_24px_70px_-24px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
+                            {/* Brand gradient accent */}
+                            <div className="h-px w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-400" aria-hidden="true" />
+                            {/* Dropdown header */}
+                            <div className="px-4 pb-1.5 pt-3.5">
+                              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">
+                                {link.label}
+                              </span>
+                            </div>
+                            <motion.div
+                              initial="hidden"
+                              animate="show"
+                              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.045 } } }}
+                              className="space-y-0.5 px-2 pb-2"
                             >
-                              {item.icon && <item.icon size={14} className="text-white/40 shrink-0" aria-hidden="true" />}
-                              {item.label}
-                            </button>
-                          ))}
+                              {link.dropdown.map((item) => (
+                                <motion.button
+                                  key={item.label}
+                                  variants={{
+                                    hidden: { opacity: 0, y: 6 },
+                                    show: { opacity: 1, y: 0, transition: { duration: 0.2 } }
+                                  }}
+                                  onClick={(e) => handleDropdownItem(item, e)}
+                                  className="group flex w-full cursor-pointer items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-colors duration-200 hover:bg-white/10"
+                                >
+                                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white/60 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-indigo-500 group-hover:to-purple-600 group-hover:text-white">
+                                    {item.icon && <item.icon size={13} aria-hidden="true" />}
+                                  </span>
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block text-xs font-medium text-white/85 transition-colors duration-200 group-hover:text-white">
+                                      {item.label}
+                                    </span>
+                                    {item.description && (
+                                      <span className="block truncate text-[10px] text-white/40">
+                                        {item.description}
+                                      </span>
+                                    )}
+                                  </span>
+                                  <ChevronRight
+                                    size={13}
+                                    className="-translate-x-1 text-white/30 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+                                    aria-hidden="true"
+                                  />
+                                </motion.button>
+                              ))}
+                            </motion.div>
+                          </div>
                         </div>
                       </motion.div>
                     )}
@@ -421,15 +464,26 @@ export default function Navbar({
                     )}
                   </button>
                   {link.dropdown && openDropdown === link.label && (
-                    <div className="ml-3 mb-1 border-l border-white/15 pl-3 space-y-1">
+                    <div className="ml-3 mb-1 border-l border-white/15 pl-3 space-y-0.5">
                       {link.dropdown.map((item) => (
                         <button
                           key={item.label}
                           onClick={(e) => handleDropdownItem(item, e)}
-                          className="flex items-center gap-2 w-full py-2.5 text-xs text-white/60 hover:text-white transition-colors cursor-pointer text-left"
+                          className="group flex w-full cursor-pointer items-center gap-3 rounded-lg py-2 pr-2 text-left transition-colors duration-200 hover:bg-white/10"
                         >
-                          {item.icon && <item.icon size={14} className="text-white/40 shrink-0" />}
-                          {item.label}
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/10 text-white/50 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-indigo-500 group-hover:to-purple-600 group-hover:text-white">
+                            {item.icon && <item.icon size={12} aria-hidden="true" />}
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-xs font-medium text-white/80 transition-colors duration-200 group-hover:text-white">
+                              {item.label}
+                            </span>
+                            {item.description && (
+                              <span className="block truncate text-[10px] text-white/40">
+                                {item.description}
+                              </span>
+                            )}
+                          </span>
                         </button>
                       ))}
                     </div>
