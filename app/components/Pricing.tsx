@@ -7,22 +7,29 @@ import Reveal from './Reveal';
 import { useToast } from './ToastContext';
 import type { User, AuthMode } from '../types';
 
+type BillingPeriod = 'monthly' | 'annual';
+
+interface BillingInfo {
+  price: string;
+  priceId: string | null;
+}
+
 interface PricingPlan {
   name: string;
-  price: string;
-  period: string;
+  monthly: BillingInfo;
+  annual: BillingInfo;
   description: string;
   features: string[];
   popular: boolean;
   cta: string;
-  priceId: string | null;
 }
 
+// Annual = 10 × monthly price → 2 mesi gratis (≈17% di risparmio)
 const plans: PricingPlan[] = [
   {
     name: 'Free',
-    price: '0',
-    period: 'Per sempre',
+    monthly: { price: '0', priceId: null },
+    annual: { price: '0', priceId: null },
     description: 'Per iniziare e costruire le prime abitudini',
     features: [
       'Fino a 3 abitudini attive',
@@ -32,13 +39,12 @@ const plans: PricingPlan[] = [
       'Dashboard mensile'
     ],
     popular: false,
-    cta: 'Inizia Gratis',
-    priceId: null
+    cta: 'Inizia Gratis'
   },
   {
     name: 'Starter',
-    price: '7.99',
-    period: '/mese',
+    monthly: { price: '7.99', priceId: process.env.NEXT_PUBLIC_STRIPE_STARTER_PRICE_ID || 'price_starter' },
+    annual: { price: '79.90', priceId: process.env.NEXT_PUBLIC_STRIPE_STARTER_ANNUAL_PRICE_ID || 'price_starter_annual' },
     description: 'Per chi vuole abitudini illimitate senza limiti',
     features: [
       'Tutto del piano Free',
@@ -49,13 +55,12 @@ const plans: PricingPlan[] = [
       'Supporto via email'
     ],
     popular: false,
-    cta: 'Passa a Starter',
-    priceId: process.env.NEXT_PUBLIC_STRIPE_STARTER_PRICE_ID || 'price_starter'
+    cta: 'Passa a Starter'
   },
   {
     name: 'Pro',
-    price: '14.99',
-    period: '/mese',
+    monthly: { price: '14.99', priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || 'price_pro' },
+    annual: { price: '149.90', priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID || 'price_pro_annual' },
     description: 'Per chi vuole massimizzare i risultati con l\'AI',
     features: [
       'Tutto del piano Starter',
@@ -66,13 +71,12 @@ const plans: PricingPlan[] = [
       'Priorità supporto'
     ],
     popular: true,
-    cta: 'Passa a Pro',
-    priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || 'price_pro'
+    cta: 'Passa a Pro'
   },
   {
     name: 'Business',
-    price: '49.99',
-    period: '/mese',
+    monthly: { price: '49.99', priceId: process.env.NEXT_PUBLIC_STRIPE_BUSINESS_PRICE_ID || 'price_business' },
+    annual: { price: '499.90', priceId: process.env.NEXT_PUBLIC_STRIPE_BUSINESS_ANNUAL_PRICE_ID || 'price_business_annual' },
     description: 'Per team e organizzazioni ad alte prestazioni',
     features: [
       'Tutto del piano Pro',
@@ -83,8 +87,7 @@ const plans: PricingPlan[] = [
       'Supporto dedicato 24/7'
     ],
     popular: false,
-    cta: 'Contatta le Vendite',
-    priceId: process.env.NEXT_PUBLIC_STRIPE_BUSINESS_PRICE_ID || 'price_business'
+    cta: 'Contatta le Vendite'
   }
 ];
 
@@ -95,10 +98,12 @@ interface PricingSectionProps {
 
 export default function PricingSection({ user, onAuthClick }: PricingSectionProps) {
   const [loading, setLoading] = useState(false);
+  const [billing, setBilling] = useState<BillingPeriod>('monthly');
   const { showToast } = useToast();
 
   const handleCheckout = async (plan: PricingPlan) => {
-    if (!plan.priceId) {
+    const selected = billing === 'annual' ? plan.annual : plan.monthly;
+    if (!selected.priceId) {
       return;
     }
 
@@ -117,8 +122,9 @@ export default function PricingSection({ user, onAuthClick }: PricingSectionProp
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          priceId: plan.priceId,
-          planName: plan.name
+          priceId: selected.priceId,
+          planName: plan.name,
+          billing
         })
       });
 
@@ -158,55 +164,93 @@ export default function PricingSection({ user, onAuthClick }: PricingSectionProp
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {plans.map((plan, i) => (
-            <Reveal key={plan.name} delay={i * 100}>
-              <div
-                className={`relative flex h-full flex-col rounded-2xl border p-8 ${
-                  plan.popular
-                    ? 'bg-white/10 border-white/40'
-                    : 'bg-white/5 border-white/20'
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-white px-4 py-1 text-xs font-medium text-black">
-                    Popolare
-                  </div>
-                )}
-
-                <div className="mb-8">
-                  <h3 className="text-lg font-medium text-white">{plan.name}</h3>
-                  <div className="mt-2 flex items-baseline gap-1.5">
-                    <span className="text-4xl font-normal tracking-tight text-white">€{plan.price}</span>
-                    <span className="text-sm text-white/50">{plan.period}</span>
-                  </div>
-                  <p className="mt-3 text-sm text-white/50">{plan.description}</p>
-                </div>
-
-                <ul className="mb-8 space-y-3 flex-1">
-                  {plan.features.map((feature, j) => (
-                    <li key={j} className="flex items-center gap-3">
-                      <Check size={15} className="shrink-0 text-white/70" aria-hidden="true" />
-                      <span className="text-sm text-white/70">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
+        {/* Billing toggle */}
+        <div className="mb-12 flex flex-col items-center gap-3">
+          <Reveal delay={380}>
+            <div className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/5 p-1 backdrop-blur-md">
+              {(['monthly', 'annual'] as BillingPeriod[]).map((b) => (
                 <button
-                  onClick={() => handleCheckout(plan)}
-                  disabled={loading}
-                  className={`w-full rounded-full py-3 text-sm font-medium transition-colors duration-300 flex items-center justify-center gap-2 ${
-                    plan.popular
-                      ? 'bg-white text-black hover:bg-white/85'
-                      : 'border border-white/25 bg-white/5 text-white hover:bg-white/10'
-                  } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  key={b}
+                  onClick={() => setBilling(b)}
+                  className={`cursor-pointer rounded-full px-5 py-2 text-sm transition-all duration-300 ${
+                    billing === b ? 'bg-white text-black' : 'text-white/70 hover:text-white'
+                  }`}
                 >
-                  {loading ? <Loader2 size={16} className="animate-spin" aria-hidden="true" /> : null}
-                  {plan.cta}
+                  {b === 'monthly' ? 'Mensile' : 'Annuale'}
                 </button>
-              </div>
-            </Reveal>
-          ))}
+              ))}
+            </div>
+          </Reveal>
+          <Reveal delay={440}>
+            <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-amber-300/80">
+              2 mesi gratis · risparmia il 17%
+            </span>
+          </Reveal>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {plans.map((plan, i) => {
+            const isFree = plan.name === 'Free';
+            const selected = billing === 'annual' ? plan.annual : plan.monthly;
+            const perMonth = (parseFloat(selected.price) / 12).toFixed(2);
+            const isAnnual = billing === 'annual' && !isFree;
+
+            return (
+              <Reveal key={plan.name} delay={i * 100}>
+                <div
+                  className={`relative flex h-full flex-col rounded-2xl border p-8 ${
+                    plan.popular
+                      ? 'bg-white/10 border-white/40'
+                      : 'bg-white/5 border-white/20'
+                  }`}
+                >
+                  {plan.popular && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-white px-4 py-1 text-xs font-medium text-black">
+                      Popolare
+                    </div>
+                  )}
+
+                  <div className="mb-8">
+                    <h3 className="text-lg font-medium text-white">{plan.name}</h3>
+                    <div className="mt-2 flex items-baseline gap-1.5">
+                      <span className="text-4xl font-normal tracking-tight text-white">€{selected.price}</span>
+                      <span className="text-sm text-white/50">
+                        {isFree ? 'Per sempre' : billing === 'annual' ? '/anno' : '/mese'}
+                      </span>
+                    </div>
+                    {isAnnual && (
+                      <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-amber-300/80">
+                        ≈ €{perMonth}/mese · 2 mesi gratis
+                      </p>
+                    )}
+                    <p className={`text-sm text-white/50 ${isAnnual ? 'mt-2' : 'mt-3'}`}>{plan.description}</p>
+                  </div>
+
+                  <ul className="mb-8 space-y-3 flex-1">
+                    {plan.features.map((feature, j) => (
+                      <li key={j} className="flex items-center gap-3">
+                        <Check size={15} className="shrink-0 text-white/70" aria-hidden="true" />
+                        <span className="text-sm text-white/70">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    onClick={() => handleCheckout(plan)}
+                    disabled={loading}
+                    className={`w-full rounded-full py-3 text-sm font-medium transition-colors duration-300 flex items-center justify-center gap-2 ${
+                      plan.popular
+                        ? 'bg-white text-black hover:bg-white/85'
+                        : 'border border-white/25 bg-white/5 text-white hover:bg-white/10'
+                    } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {loading ? <Loader2 size={16} className="animate-spin" aria-hidden="true" /> : null}
+                    {plan.cta}
+                  </button>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
       </section>

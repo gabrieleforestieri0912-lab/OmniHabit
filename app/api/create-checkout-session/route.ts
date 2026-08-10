@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   if (response) return response;
 
   try {
-    const { priceId, planName } = await request.json();
+    const { priceId, planName, billing } = await request.json();
 
     if (!priceId) {
       return NextResponse.json({ error: 'Price ID is required' }, { status: 400 });
@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
       metadata: {
         userId: user.id.toString(),
         planName,
+        billing: billing || 'monthly',
         username: user.username
       }
     });
