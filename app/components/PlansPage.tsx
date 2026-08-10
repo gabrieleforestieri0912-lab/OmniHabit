@@ -103,7 +103,7 @@ export default function PlansPage({ onBack, user }: PlansPageProps) {
 
 
   return (
-    <div className="min-h-screen bg-black pt-24 pb-16 px-4 md:px-8">
+    <div className="min-h-screen bg-background pt-32 pb-20 px-4 md:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -158,7 +158,7 @@ export default function PlansPage({ onBack, user }: PlansPageProps) {
             <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Sparkles size={48} className="text-white/80" />
             </div>
-            <h3 className="text-2xl font-normal tracking-tight mb-3">Nessun piano salvato</h3>
+            <h3 className="font-display text-2xl font-medium tracking-tighter mb-3">Nessun piano salvato</h3>
             <p className="text-white/40 mb-6 max-w-md mx-auto">
               Genera il tuo primo piano personalizzato di abitudini con l'AI e salvalo per tenerne traccia.
             </p>
@@ -189,7 +189,7 @@ export default function PlansPage({ onBack, user }: PlansPageProps) {
                       )}
                     </div>
                     <div>
-                      <h3 className="text-xl font-medium tracking-tight mb-1">
+                      <h3 className="font-display text-xl font-medium tracking-tighter mb-1">
                         {plan.title}
                       </h3>
                       <p className="text-white/50 text-sm">{plan.description}</p>

@@ -86,7 +86,7 @@ export default function PrivacyPage({ onBack }: PrivacyPageProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-black pt-24 pb-16 px-4 md:px-8">
+    <div className="min-h-screen bg-background pt-32 pb-20 px-4 md:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -102,15 +102,20 @@ export default function PrivacyPage({ onBack }: PrivacyPageProps) {
             Indietro
           </button>
 
+          <div className="mb-5 inline-flex border-l-2 border-white bg-white/15 px-3 py-1.5 backdrop-blur-md">
+            <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white">
+              Privacy
+            </span>
+          </div>
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center">
               <Shield size={32} className="text-white" />
             </div>
             <div>
-              <h1 className="text-4xl md:text-5xl font-normal tracking-tight leading-[1.05]">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.95] tracking-tighter text-white drop-shadow-lg">
                 Privacy <span className="text-white/40">Policy</span>
               </h1>
-              <p className="text-white/50 mt-1">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 mt-3">
                 Ultimo aggiornamento: {lastUpdate}
               </p>
             </div>
@@ -123,7 +128,7 @@ export default function PrivacyPage({ onBack }: PrivacyPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md"
+            className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md"
           >
             <p className="text-lg text-white/70 leading-relaxed">
               La presente Privacy Policy descrive come OmniHabit raccoglie, utilizza e protegge
@@ -140,13 +145,13 @@ export default function PrivacyPage({ onBack }: PrivacyPageProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * (index + 1) }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md"
+                className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 backdrop-blur-md"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center">
                     <Icon size={20} className="text-white" />
                   </div>
-                  <h2 className="text-xl font-medium tracking-tight">
+                  <h2 className="font-display text-lg sm:text-xl font-medium tracking-tighter text-white">
                     {section.title}
                   </h2>
                 </div>
