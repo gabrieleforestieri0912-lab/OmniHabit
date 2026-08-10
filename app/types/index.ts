@@ -53,12 +53,6 @@ export type View =
 
 export type AuthMode = 'login' | 'register' | null;
 
-export interface AuthForm {
-  username: string;
-  email: string;
-  password: string;
-}
-
 export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;

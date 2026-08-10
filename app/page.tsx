@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 import Navbar from './components/Navbar';
 import ScrollVideo from './components/ScrollVideo';
@@ -11,7 +12,6 @@ import MonthSelection from './components/MonthSelection';
 import DocAccessSection from './components/DocAccess';
 import MonthDashboard from './components/MonthDashboard';
 import UserDashboard from './components/UserDashboard';
-import AuthModal from './components/AuthModal';
 import ChatModal from './components/ChatModal';
 import ChatPage from './components/ChatPage';
 import PlanModal from './components/PlanModal';
@@ -30,18 +30,17 @@ import { API_URL } from './components/constants';
 import { getGlobalStats, todayKey } from './components/utils';
 import { ToastProvider, useToast } from './components/ToastContext';
 import { useReminders } from './components/useReminders';
-import type { User, Habit, HabitsMap, View, AuthMode, AuthForm, ChatMessage, GeneratedPlan } from './types';
+import type { User, Habit, HabitsMap, View, AuthMode, ChatMessage, GeneratedPlan } from './types';
 
 function AppInner() {
   const { showToast } = useToast();
+  const router = useRouter();
   const [currentView, setCurrentView] = useState<View>('home');
   const [selectedDocCategory, setSelectedDocCategory] = useState<string>('introduzione');
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isQuartersView, setIsQuartersView] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [authModal, setAuthModal] = useState<AuthMode>(null);
-  const [authForm, setAuthForm] = useState<AuthForm>({ username: '', email: '', password: '' });
   const [habits, setHabits] = useState<HabitsMap>({});
   const [loading, setLoading] = useState(true);
   const [newHabit, setNewHabit] = useState('');
@@ -108,47 +107,10 @@ function AppInner() {
     else setHabits({});
   }, [user, fetchHabits]);
 
-  const handleAuthSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const endpoint = authModal === 'login' ? '/auth/login' : '/auth/register';
-    try {
-      const res = await fetch(`${API_URL}${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(authForm)
-      });
-      const data = (await res.json()) as { token: string; user: User; error?: string };
-      if (res.ok) {
-        localStorage.setItem('omni_token', data.token);
-        setUser(data.user);
-        setAuthModal(null);
-        setAuthForm({ username: '', email: '', password: '' });
-      } else {
-        showToast(data.error || 'Errore di accesso', 'error');
-      }
-    } catch {
-      showToast('Errore di connessione', 'error');
-    }
-  };
-
   const logout = () => {
     localStorage.removeItem('omni_token');
     setUser(null);
     handleNavClick('home');
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      const res = await fetch(`${API_URL}/auth/google`);
-      const data = (await res.json()) as { authUrl?: string; error?: string };
-      if (data.authUrl) {
-        window.location.href = data.authUrl;
-      } else {
-        showToast(data.error || 'Errore con Google OAuth', 'error');
-      }
-    } catch {
-      showToast('Errore di connessione. Assicurati che il server sia in esecuzione su localhost:5000', 'error');
-    }
   };
 
   useEffect(() => {
@@ -183,7 +145,7 @@ function AppInner() {
   const handleChatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
-    if (!user) { setAuthModal('login'); return; }
+    if (!user) { goToAuth('login'); return; }
     
     const userMessage = chatInput.trim();
     setChatInput('');
@@ -257,7 +219,7 @@ body: JSON.stringify({
   const addHabit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newHabit.trim() || !selectedMonth || !user) {
-        if (!user) setAuthModal('login');
+        if (!user) goToAuth('login');
         return;
     }
     
@@ -296,7 +258,7 @@ body: JSON.stringify({
     if (!habitBuilderMonth || !user) {
       setHabitBuilderOpen(false);
       setHabitBuilderMonth(null);
-      setAuthModal('login');
+      goToAuth('login');
       return;
     }
     const month = habitBuilderMonth;
@@ -412,6 +374,11 @@ body: JSON.stringify({
     }
   };
 
+  // Dedicated auth pages: every login/register trigger navigates to /login or /register.
+  const goToAuth = (mode: AuthMode) => {
+    router.push(mode === 'register' ? '/register' : '/login');
+  };
+
   const handleNavClick = (view: View, e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     setCurrentView(view);
@@ -432,7 +399,7 @@ body: JSON.stringify({
       setCurrentView('dashboard');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      setAuthModal('login'); // Open login modal if not logged in
+      goToAuth('login'); // Open the dedicated login page if not logged in
     }
   };
 
@@ -443,7 +410,7 @@ body: JSON.stringify({
         setCurrentView('dashboard');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        setAuthModal('login'); // Open login modal if not logged in
+        router.push('/login'); // Open the dedicated login page if not logged in
       }
     }
   }, [selectedMonth, currentView, user]); // Add 'user' to dependencies
@@ -460,21 +427,12 @@ body: JSON.stringify({
          onNavClick={handleNavClick}
          user={user}
          onLogout={logout}
-         onAuthClick={setAuthModal}
+         onAuthClick={goToAuth}
          onPlanModalOpen={setPlanModalOpen}
          isMenuOpen={isMenuOpen}
          setIsMenuOpen={setIsMenuOpen}
        />
       )}
-
-      <AuthModal 
-        authModal={authModal}
-        setAuthModal={setAuthModal}
-        authForm={authForm}
-        setAuthForm={setAuthForm}
-        handleAuthSubmit={handleAuthSubmit}
-        handleGoogleLogin={handleGoogleLogin}
-      />
 
        <ChatModal 
          chatOpen={chatOpen}
@@ -485,7 +443,7 @@ body: JSON.stringify({
          chatLoading={chatLoading}
          handleChatSubmit={handleChatSubmit}
          user={user}
-         onAuthClick={setAuthModal}
+         onAuthClick={goToAuth}
        />
 
        <PlanModal 
@@ -498,7 +456,7 @@ body: JSON.stringify({
          planLoading={planLoading}
          generatePlan={generatePlan}
          user={user}
-         onAuthClick={setAuthModal}
+         onAuthClick={goToAuth}
          onPlanApplied={handlePlanApplied}
          planStyle={planStyle}
          setPlanStyle={setPlanStyle}
@@ -538,7 +496,7 @@ body: JSON.stringify({
                       if (user) {
                         document.getElementById('months')?.scrollIntoView({ behavior: 'smooth' });
                       } else {
-                        setAuthModal('login');
+                        goToAuth('login');
                       }
                     }}
                   />
@@ -547,12 +505,12 @@ body: JSON.stringify({
                 {/* Capability */}
                 {!isQuartersView && (
                   <SectionTwo
-                    onAuthClick={setAuthModal}
+                    onAuthClick={goToAuth}
                     onStart={() => {
                       if (user) {
                         document.getElementById('months')?.scrollIntoView({ behavior: 'smooth' });
                       } else {
-                        setAuthModal('login');
+                        goToAuth('login');
                       }
                     }}
                   />
@@ -586,7 +544,7 @@ body: JSON.stringify({
 
                 {/* Pricing Section */}
                 {!isQuartersView && (
-                  <PricingSection user={user} onAuthClick={setAuthModal} />
+                  <PricingSection user={user} onAuthClick={goToAuth} />
                 )}
 
                 {/* FAQ Section */}
@@ -624,7 +582,7 @@ body: JSON.stringify({
              onBack={() => handleNavClick('home')}
              user={user}
              habits={habits}
-             onAuthClick={() => setAuthModal('login')}
+             onAuthClick={() => goToAuth('login')}
            />
          ) : currentView === 'plans' ? (
            <PlansPage 
