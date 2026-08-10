@@ -37,9 +37,8 @@
 }
 
 @layer base {
-  html {
-    @apply scroll-smooth;
-  }
+  /* Native wheel scroll stays instant — smooth scrolling is applied explicitly
+     per-call (nav links) so the page never feels stuck on heavy content. */
   body {
     @apply m-0 p-0 overflow-x-hidden bg-background text-foreground font-sans text-sm antialiased;
     font-family: var(--font-sans), system-ui, sans-serif;

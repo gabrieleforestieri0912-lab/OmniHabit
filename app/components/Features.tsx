@@ -49,7 +49,7 @@ export default function FeaturesSection() {
     <Reveal scale>
       <section
         id="features"
-        className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]"
+        className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]"
       >
       <div className="mx-auto max-w-7xl">
         {/* Header */}
@@ -130,6 +130,10 @@ export default function FeaturesSection() {
         <Reveal delay={200} className="mt-16 md:mt-20 text-center">
           <a
             href="#months"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('months')?.scrollIntoView({ behavior: 'smooth' });
+            }}
             className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-black px-7 py-3 text-sm font-medium text-white hover:bg-gray-900 transition-colors duration-300"
           >
             Inizia Ora

@@ -127,7 +127,7 @@ export default function Navbar({
       className="fixed left-0 right-0 top-4 z-50 mx-auto w-[calc(100%-2rem)] max-w-5xl"
     >
       {/* Floating glass pill */}
-      <div className="rounded-2xl border border-white/10 bg-background/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl">
+      <div className="rounded-2xl border border-white/10 bg-background/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md">
         <div
           className={`mx-auto flex items-center justify-between px-5 sm:px-8 transition-all duration-300 ${
             scrolled ? 'py-3' : 'py-4'

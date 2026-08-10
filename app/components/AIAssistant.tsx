@@ -26,7 +26,7 @@ interface AIAssistantProps {
 export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
   return (
     <Reveal scale>
-      <section id="ai-assistant" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/25 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
+      <section id="ai-assistant" className="relative px-5 sm:px-8 md:px-12 py-16 md:py-20 mx-3 sm:mx-6 lg:mx-10 my-4 md:my-6 rounded-3xl border border-white/10 bg-background/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)]">
       <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center max-w-7xl">
         {/* Left: content */}
         <div>

@@ -419,7 +419,7 @@ body: JSON.stringify({
   useReminders(habits, user);
 
   return (
-    <div className="relative min-h-screen font-sans text-foreground scroll-smooth bg-background overflow-x-hidden">
+    <div className="relative min-h-screen font-sans text-foreground bg-background overflow-x-hidden">
 
       {currentView !== 'chat' && (
        <Navbar 

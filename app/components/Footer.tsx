@@ -21,7 +21,7 @@ export default function Footer({ onNavClick }: FooterProps) {
   ];
 
   return (
-    <footer className="relative border-t border-white/15 bg-background/60 backdrop-blur-md">
+    <footer className="relative border-t border-white/15 bg-background/70">
       <Reveal scale>
         <div className="mx-auto max-w-7xl px-5 sm:px-8 md:px-12 py-14 md:py-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14">
