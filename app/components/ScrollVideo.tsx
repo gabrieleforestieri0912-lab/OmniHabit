@@ -7,6 +7,7 @@ const VIDEO_URL =
 
 const FADE_MS = 500;
 const REPLAY_DELAY_MS = 100;
+const IDLE_TIMEOUT_MS = 2500;
 
 export default function ScrollVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -22,6 +23,10 @@ export default function ScrollVideo() {
     let fadingOut = false;
     let started = false;
     let replayTimer = 0;
+    let startTimer = 0;
+    let ready = false;
+    let playbackGo = false;
+    let disposed = false;
 
     const tick = (now: number) => {
       // Idle guard: never keep burning frames when no fade is running.
@@ -69,6 +74,30 @@ export default function ScrollVideo() {
       rafId = requestAnimationFrame(tick);
     };
 
+    const tryStart = () => {
+      if (disposed) return;
+      if (playbackGo && ready) beginFadeIn();
+    };
+
+    // Playback only starts when the video is ready AND the page has settled
+    // (first user interaction, or the main thread going idle — whichever first).
+    // Starting at page load made the video decode compete with the user's very
+    // first scroll gesture, freezing it for ~1-2s.
+    const markReady = () => {
+      ready = true;
+      tryStart();
+    };
+
+    const markGo = () => {
+      if (disposed || playbackGo) return;
+      playbackGo = true;
+      window.removeEventListener('wheel', markGo);
+      window.removeEventListener('pointerdown', markGo);
+      window.removeEventListener('touchstart', markGo);
+      window.removeEventListener('scroll', markGo);
+      tryStart();
+    };
+
     const handleEnded = () => {
       fadingIn = false;
       fadingOut = true;
@@ -83,7 +112,9 @@ export default function ScrollVideo() {
         window.clearTimeout(replayTimer);
         video.pause();
       } else {
-        if (video.paused) {
+        // Only resume playback that has already started; pre-start cases go
+        // through tryStart() so the gating (interaction/idle) still applies.
+        if (started && video.paused) {
           const p = video.play();
           if (p && typeof p.catch === 'function') p.catch(() => {});
         }
@@ -91,6 +122,9 @@ export default function ScrollVideo() {
           // Resume an in-progress fade.
           start = performance.now();
           rafId = requestAnimationFrame(tick);
+        } else if (!started) {
+          // Pre-start: retry now that the tab is visible again.
+          tryStart();
         } else if (video.style.opacity === '0') {
           // We were mid replay-delay when hidden: restart the fade-in so the
           // video never stays invisible after coming back.
@@ -102,18 +136,39 @@ export default function ScrollVideo() {
     };
 
     video.style.opacity = '0';
-    video.addEventListener('canplay', beginFadeIn);
+    video.addEventListener('canplay', markReady);
     video.addEventListener('ended', handleEnded);
     document.addEventListener('visibilitychange', handleVisibility);
-    // In case `canplay` already fired before the listener was attached (warm cache)
-    if (video.readyState >= 3) beginFadeIn();
+    // Warm cache: `canplay` may have fired before the listener was attached.
+    if (video.readyState >= 3) ready = true;
+
+    // Deferred start — interaction or idle, whichever comes first.
+    window.addEventListener('wheel', markGo, { passive: true });
+    window.addEventListener('pointerdown', markGo, { passive: true });
+    window.addEventListener('touchstart', markGo, { passive: true });
+    window.addEventListener('scroll', markGo, { passive: true });
+    if (typeof window.requestIdleCallback === 'function') {
+      startTimer = window.requestIdleCallback(markGo, { timeout: IDLE_TIMEOUT_MS });
+    } else {
+      startTimer = window.setTimeout(markGo, 2000);
+    }
 
     return () => {
+      disposed = true;
       cancelAnimationFrame(rafId);
       window.clearTimeout(replayTimer);
-      video.removeEventListener('canplay', beginFadeIn);
+      if (typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(startTimer);
+      } else {
+        window.clearTimeout(startTimer);
+      }
+      video.removeEventListener('canplay', markReady);
       video.removeEventListener('ended', handleEnded);
       document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('wheel', markGo);
+      window.removeEventListener('pointerdown', markGo);
+      window.removeEventListener('touchstart', markGo);
+      window.removeEventListener('scroll', markGo);
     };
   }, []);
 

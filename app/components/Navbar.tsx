@@ -45,27 +45,39 @@ export default function Navbar({
   const userMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+  const lastScrollY = useRef(0);
+  const scrollRaf = useRef(0);
 
   // Navbar stays fixed at all times: scrolling only shrinks the pill slightly.
   // Also tracks the active section for the underline.
+  // The handler is rAF-throttled: getBoundingClientRect() forces layout, so it
+  // runs at most once per animation frame instead of on every scroll event.
   useMotionValueEvent(scrollY, 'change', (y) => {
-    setScrolled(y > 24);
+    lastScrollY.current = y;
+    if (scrollRaf.current) return; // a pass is already scheduled
+    scrollRaf.current = requestAnimationFrame(() => {
+      scrollRaf.current = 0;
+      const yv = lastScrollY.current;
+      setScrolled(yv > 24);
 
-    // Active section indicator (home only). The probe sits just below the
-    // floating navbar (~96px from the viewport top), independent of viewport
-    // height, so short sections stay active while they are on screen.
-    if (currentView !== 'home') {
-      setActiveSection(null);
-      return;
-    }
-    const probe = y + 96;
-    let current: string | null = null;
-    for (const id of sectionIds) {
-      const el = document.getElementById(id);
-      if (el && el.getBoundingClientRect().top + y <= probe) current = sectionAliases[id] || id;
-    }
-    setActiveSection(current);
+      // Active section indicator (home only). The probe sits just below the
+      // floating navbar (~96px from the viewport top), independent of viewport
+      // height, so short sections stay active while they are on screen.
+      if (currentView !== 'home') {
+        setActiveSection(null);
+        return;
+      }
+      const probe = yv + 96;
+      let current: string | null = null;
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top + yv <= probe) current = sectionAliases[id] || id;
+      }
+      setActiveSection(current);
+    });
   });
+
+  useEffect(() => () => cancelAnimationFrame(scrollRaf.current), []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

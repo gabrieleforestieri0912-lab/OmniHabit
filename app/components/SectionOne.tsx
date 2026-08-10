@@ -43,10 +43,18 @@ export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
 
   return (
     <section className="relative flex min-h-screen supports-[height:100svh]:min-h-[100svh] flex-col overflow-visible">
-      {/* Blurred overlay shape — soft dark halo behind the centered content */}
+      {/* Soft dark halo behind the centered content.
+          NOTE: previously a blur-[82px] filter on a 984x527 element — a huge filter
+          region over the fixed video that froze the FIRST scroll frame (~2s stall
+          while the browser rasterized it). A radial gradient reproduces the same
+          dark halo look at zero per-frame cost. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[527px] w-[984px] -translate-x-1/2 -translate-y-1/2 bg-gray-950 opacity-90 blur-[82px]"
+        className="pointer-events-none absolute top-1/2 left-1/2 h-[527px] w-[984px] -translate-x-1/2 -translate-y-1/2"
+        style={{
+          background:
+            'radial-gradient(ellipse 50% 50% at center, rgba(2,2,8,0.92) 0%, rgba(2,2,8,0.6) 50%, rgba(2,2,8,0.25) 72%, transparent 100%)'
+        }}
       />
 
       {/* Centered hero content */}
