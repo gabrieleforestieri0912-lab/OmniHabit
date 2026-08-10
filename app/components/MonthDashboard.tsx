@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
 import { ArrowLeft, LayoutGrid, Trophy, Zap, Target, CheckCircle2, Circle, Plus, Trash2, AlarmClock, Save, AlertTriangle, Sparkles } from 'lucide-react';
@@ -126,6 +126,24 @@ export default function MonthDashboard({
   const monthHabits = selectedMonth ? (habits[selectedMonth] || []) : [];
   const expStats = getExpStats(monthHabits);
 
+  // Recharts radii are px-only: fixed 80/120 would clip the pie on phones where
+  // the card is narrower than 240px. Measure the container and scale down only
+  // when needed (desktop keeps the original 80/120 look).
+  const chartRef = useRef<HTMLDivElement>(null);
+  const [pieRadius, setPieRadius] = useState({ inner: 80, outer: 120 });
+  useEffect(() => {
+    const el = chartRef.current;
+    if (!el) return;
+    const update = () => {
+      const outer = Math.min(120, Math.floor((el.clientWidth - 24) / 2));
+      setPieRadius({ inner: Math.min(80, Math.floor(outer * 0.66)), outer });
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   return (
     <motion.div
       key="dashboard-page"
@@ -186,15 +204,15 @@ export default function MonthDashboard({
             </div>
             <h3 className="text-xl md:text-3xl font-normal tracking-tight">Completamento Oggi</h3>
           </div>
-          <div className="h-[300px] md:h-[400px] w-full">
+          <div ref={chartRef} className="h-[300px] md:h-[400px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={getPieData(monthHabits)}
                   cx="50%"
                   cy="50%"
-                  innerRadius={80}
-                  outerRadius={120}
+                  innerRadius={pieRadius.inner}
+                  outerRadius={pieRadius.outer}
                   paddingAngle={10}
                   dataKey="value"
                   stroke="none"
@@ -209,7 +227,7 @@ export default function MonthDashboard({
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex justify-center gap-10 mt-6">
+          <div className="flex flex-wrap justify-center gap-x-6 sm:gap-x-10 gap-y-3 mt-6">
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 rounded-full bg-white" />
               <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-white/50">Completati oggi</span>
@@ -287,7 +305,7 @@ export default function MonthDashboard({
             return (
             <div key={habit._id} className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
               <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 min-w-0">
                   <button
                     onClick={() => toggleHabit && toggleHabit(selectedMonth || '', habit._id)}
                     className={`w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer ${habit.completed ? 'bg-white text-black' : 'bg-white/5 hover:bg-white/15'}`}
@@ -295,8 +313,8 @@ export default function MonthDashboard({
                   >
                     {habit.completed ? <CheckCircle2 size={24} strokeWidth={3} /> : <Circle size={24} className="text-white/20" />}
                   </button>
-                  <div>
-                    <div className={`text-lg font-medium tracking-tight ${habit.completed ? 'line-through text-white/40' : ''}`}>{habit.name}</div>
+                  <div className="min-w-0">
+                    <div className={`text-lg font-medium tracking-tight break-words ${habit.completed ? 'line-through text-white/40' : ''}`}>{habit.name}</div>
                     <div className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em]">Strike: {habit.streak} giorni</div>
                     {(habit.cueTime || habit.reminderTime) && (
                       <div className="mt-0.5 flex items-center gap-1 text-[9px] font-mono uppercase tracking-[0.15em] text-white/40">
@@ -312,7 +330,7 @@ export default function MonthDashboard({
                 {deleteHabit && (
                   <button
                     onClick={() => deleteHabit(selectedMonth || '', habit._id)}
-                    className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors cursor-pointer"
+                    className="p-2.5 shrink-0 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors cursor-pointer"
                     aria-label="Elimina obiettivo"
                   >
                     <Trash2 size={16} />

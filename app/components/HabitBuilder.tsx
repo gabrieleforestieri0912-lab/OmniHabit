@@ -114,13 +114,13 @@ export default function HabitBuilder({ open, month, existingHabits, onClose, onC
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-100 bg-black/80 backdrop-blur-2xl flex items-center justify-center p-3"
+          className="fixed inset-0 z-100 bg-black/80 backdrop-blur-md flex items-center justify-center p-3"
         >
           <motion.div
             initial={{ scale: 0.94, y: 16 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.94, y: 16 }}
-            className="w-full max-w-xl max-h-[88vh] overflow-y-auto rounded-[28px] border border-white/15 bg-background/80 backdrop-blur-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_30px_80px_-20px_rgba(0,0,0,0.8)]"
+            className="w-full max-w-xl max-h-[88vh] overflow-y-auto rounded-[28px] border border-white/15 bg-background/80 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_30px_80px_-20px_rgba(0,0,0,0.8)]"
           >
             {/* Header */}
             <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-white/15 bg-background/60 px-6 py-5 backdrop-blur-xl">
@@ -133,7 +133,7 @@ export default function HabitBuilder({ open, month, existingHabits, onClose, onC
                   Atomic Habits · James Clear · {month}
                 </p>
               </div>
-              <button onClick={close} className="text-white/30 hover:text-white transition-colors cursor-pointer" aria-label="Chiudi">
+              <button onClick={close} className="-mr-1 p-2 text-white/30 hover:text-white transition-colors cursor-pointer" aria-label="Chiudi">
                 <X size={18} />
               </button>
             </div>
