@@ -178,11 +178,11 @@ export default function MonthDashboard({
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${expStats.progress}%` }}
-              className="h-full bg-white"
+              className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-400"
             />
           </div>
           <div className="flex items-center gap-6">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/15 rounded-2xl flex items-center justify-center">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
               <Trophy size={32} className="text-white" />
             </div>
             <div>
@@ -191,7 +191,7 @@ export default function MonthDashboard({
             </div>
           </div>
           <div className="w-full mt-4 flex justify-between text-[10px] font-mono uppercase tracking-[0.15em] text-white/40">
-            <span>EXP: {expStats.expInLevel}/10</span>
+            <span className="text-amber-200/80">EXP: {expStats.expInLevel}/10</span>
             <span>Prossimo Livello</span>
           </div>
         </div>
@@ -222,7 +222,7 @@ export default function MonthDashboard({
                   stroke="none"
                 >
                   <Cell fill="#ffffff" />
-                  <Cell fill="rgba(255,255,255,0.08)" />
+                  <Cell fill="rgba(129,140,248,0.35)" />
                 </Pie>
                 <RechartsTooltip
                   contentStyle={{ backgroundColor: '#000', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '15px' }}
@@ -237,7 +237,7 @@ export default function MonthDashboard({
               <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-white/50">Completati oggi</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full bg-white/15" />
+              <div className="w-3 h-3 rounded-full bg-indigo-400/40" />
               <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-white/50">Da completare</span>
             </div>
           </div>
@@ -246,8 +246,8 @@ export default function MonthDashboard({
         {/* Daily Strike & Quick Stats */}
         <div className="flex flex-col gap-8">
           <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 flex-1 flex flex-col justify-center items-center text-center">
-            <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6">
-              <Zap size={40} className="text-white/80 animate-pulse" />
+            <div className="w-20 h-20 bg-gradient-to-br from-rose-500/25 to-amber-400/25 rounded-full flex items-center justify-center mb-6 border border-rose-400/20">
+              <Zap size={40} className="text-amber-300 animate-pulse" />
             </div>
             <div className="font-display text-sm font-medium tracking-tighter text-white mb-2">Strike Totale Mensile</div>
             <div className="text-6xl md:text-8xl font-normal tracking-tight">
@@ -312,7 +312,7 @@ export default function MonthDashboard({
                 <div className="flex items-center gap-6 min-w-0">
                   <button
                     onClick={() => toggleHabit && toggleHabit(selectedMonth || '', habit._id)}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer ${habit.completed ? 'bg-white text-black' : 'bg-white/5 hover:bg-white/15'}`}
+                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer ${habit.completed ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30' : 'bg-white/5 hover:bg-white/15'}`}
                     aria-label={habit.completed ? 'Annulla check-in di oggi' : 'Segna come completato oggi'}
                   >
                     {habit.completed ? <CheckCircle2 size={24} strokeWidth={3} /> : <Circle size={24} className="text-white/20" />}

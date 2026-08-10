@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Hexagon, ArrowLeft } from 'lucide-react';
+import { Hexagon } from 'lucide-react';
 import ScrollVideo from './ScrollVideo';
 
 export const authInputClass =
@@ -41,14 +41,6 @@ export default function AuthShell({ children }: AuthShellProps) {
             {children}
           </div>
 
-          {/* Back home */}
-          <Link
-            href="/"
-            className="mt-8 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/40 transition-colors duration-300 hover:text-white"
-          >
-            <ArrowLeft size={14} aria-hidden="true" />
-            Torna alla home
-          </Link>
         </motion.div>
       </div>
     </div>

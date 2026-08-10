@@ -1,12 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Shield, FileText, Lock, Eye, Trash2, Mail, type LucideIcon } from 'lucide-react';
-import { useGoBack } from './useGoBack';
-
-interface PrivacyPageProps {
-  onBack?: () => void;
-}
+import { Shield, FileText, Lock, Eye, Trash2, Mail, type LucideIcon } from 'lucide-react';
 
 interface Section {
   title: string;
@@ -14,9 +9,7 @@ interface Section {
   content: string[];
 }
 
-export default function PrivacyPage({ onBack }: PrivacyPageProps) {
-  const goBack = useGoBack();
-  const handleBack = onBack ?? goBack;
+export default function PrivacyPage() {
   const lastUpdate = '23 Aprile 2026';
 
   const sections: Section[] = [
@@ -94,14 +87,6 @@ export default function PrivacyPage({ onBack }: PrivacyPageProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-6 font-mono uppercase tracking-[0.15em] text-xs cursor-pointer"
-          >
-            <ArrowLeft size={18} />
-            Indietro
-          </button>
-
           <div className="mb-5 inline-flex border-l-2 border-white bg-white/15 px-3 py-1.5 backdrop-blur-md">
             <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white">
               Privacy

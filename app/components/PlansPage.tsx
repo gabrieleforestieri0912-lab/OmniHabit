@@ -2,17 +2,16 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Calendar, Trash2, Play, Sparkles, CheckCircle } from 'lucide-react';
+import { BookOpen, Calendar, Trash2, Play, Sparkles, CheckCircle } from 'lucide-react';
 import { API_URL } from './constants';
 import { useToast } from './ToastContext';
 import type { User, Plan } from '../types';
 
 interface PlansPageProps {
-  onBack: () => void;
   user: User | null;
 }
 
-export default function PlansPage({ onBack, user }: PlansPageProps) {
+export default function PlansPage({ user }: PlansPageProps) {
   const { showToast } = useToast();
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
@@ -111,14 +110,6 @@ export default function PlansPage({ onBack, user }: PlansPageProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <button 
-            onClick={onBack}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-6 font-mono uppercase tracking-[0.15em] text-xs cursor-pointer"
-          >
-            <ArrowLeft size={18} />
-            Indietro
-          </button>
-          
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 bg-white/15 rounded-2xl flex items-center justify-center">
               <BookOpen size={32} className="text-white" />

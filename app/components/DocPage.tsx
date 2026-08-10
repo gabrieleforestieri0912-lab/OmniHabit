@@ -2,24 +2,19 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
 import { docContent } from './constants';
-import { useGoBack } from './useGoBack';
 
 interface DocPageProps {
   selectedDocCategory?: string;
   setSelectedDocCategory?: (category: string) => void;
-  onBack?: () => void;
 }
 
-export default function DocPage({ selectedDocCategory, setSelectedDocCategory, onBack }: DocPageProps) {
-  // Uso standalone (es. route /metodo): categoria e back gestiti internamente
+export default function DocPage({ selectedDocCategory, setSelectedDocCategory }: DocPageProps) {
+  // Uso standalone (es. route /metodo): categoria gestita internamente
   const [internalCategory, setInternalCategory] = useState('introduzione');
-  const goBack = useGoBack();
 
   const category = selectedDocCategory ?? internalCategory;
   const setCategory = setSelectedDocCategory ?? setInternalCategory;
-  const handleBack = onBack ?? goBack;
 
   return (
     <motion.div
@@ -54,14 +49,6 @@ export default function DocPage({ selectedDocCategory, setSelectedDocCategory, o
               {key.replace('-', ' ')}
             </button>
           ))}
-        <hr className="my-5 border-white/15" />
-        <button 
-          onClick={handleBack}
-          className="text-left px-5 py-3 text-white/40 hover:text-white font-medium text-[10px] flex items-center gap-2 transition-colors cursor-pointer"
-          aria-label="Torna alla Home"
-        >
-          <X size={12} aria-hidden="true" /> Torna alla Home
-        </button>
       </aside>
 
       {/* Content Area */}

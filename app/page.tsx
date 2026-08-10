@@ -610,7 +610,6 @@ body: JSON.stringify({
            <UserDashboard 
              habits={habits}
              user={user}
-             onBack={() => handleNavClick('home')}
              onPlanModalOpen={setPlanModalOpen}
              onChatOpen={() => setChatOpen(true)}
              onPlansOpen={() => setCurrentView('plans')}
@@ -630,19 +629,17 @@ body: JSON.stringify({
            />
          ) : currentView === 'plans' ? (
            <PlansPage 
-             onBack={() => handleNavClick('home')}
              user={user}
            />
           ) : currentView === 'doc' ? (
            <DocPage 
              selectedDocCategory={selectedDocCategory}
              setSelectedDocCategory={setSelectedDocCategory}
-             onBack={() => handleNavClick('home')}
            />
          ) : currentView === 'privacy' ? (
-           <PrivacyPage onBack={() => handleNavClick('home')} />
+           <PrivacyPage />
          ) : currentView === 'terms' ? (
-           <TermsPage onBack={() => handleNavClick('home')} />
+           <TermsPage />
          ) : null}
       </AnimatePresence>
 
