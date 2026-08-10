@@ -37,7 +37,7 @@ const plans: PricingPlan[] = [
   },
   {
     name: 'Starter',
-    price: '4',
+    price: '7.99',
     period: '/mese',
     description: 'Per chi vuole abitudini illimitate senza limiti',
     features: [
@@ -54,7 +54,7 @@ const plans: PricingPlan[] = [
   },
   {
     name: 'Pro',
-    price: '9',
+    price: '14.99',
     period: '/mese',
     description: 'Per chi vuole massimizzare i risultati con l\'AI',
     features: [
@@ -71,7 +71,7 @@ const plans: PricingPlan[] = [
   },
   {
     name: 'Business',
-    price: '29',
+    price: '49.99',
     period: '/mese',
     description: 'Per team e organizzazioni ad alte prestazioni',
     features: [

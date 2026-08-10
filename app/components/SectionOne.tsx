@@ -64,7 +64,7 @@ export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
       />
 
       {/* Centered hero content */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 sm:px-8 text-center">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 sm:px-8 pt-24 sm:pt-32 text-center">
         <Reveal delay={100}>
           <h1 className="font-display text-[clamp(44px,12vw,190px)] font-normal leading-[1.02] tracking-[-0.024em] text-foreground">
             Omni
@@ -78,10 +78,10 @@ export default function SectionOne({ user, stats, onStart }: SectionOneProps) {
         </Reveal>
 
         <Reveal delay={250}>
-          <p className="mt-[9px] max-w-md text-hero-sub text-lg leading-8 opacity-80">
+          <p className="mt-[9px] max-w-xl text-hero-sub text-lg leading-8 opacity-80">
             {user
-              ? `La tua costanza parla per te: ${stats.totalStreak} giorni di streak. Il sistema più potente per continuare a costruire.`
-              : 'Il sistema più potente mai costruito per trasformare le tue abitudini in risultati concreti.'}
+              ? `La tua costanza parla per te: ${stats.totalStreak} giorni di streak. Il sistema più potente per continuare a costruire: mantieni la sequenza, completa il check-in di oggi e la tua prossima abitudine è già a un passo.`
+              : 'Il sistema più potente mai costruito per trasformare le tue abitudini in risultati concreti. Ispirato ad Atomic Habits di James Clear: costruisci abitudini che durano con il metodo delle 4 Leggi, l\'AI Coach OmniMind e un tracking che ti tiene sulla strada giusta, giorno dopo giorno.'}
           </p>
         </Reveal>
 
