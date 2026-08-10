@@ -156,7 +156,7 @@ export default function PlanModal({
               </div>
               <div>
                 <h2 className="text-xl font-medium tracking-tight">Generatore Piani</h2>
-                <p className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em]">AI Habit Planner • Llama 3</p>
+                <p className="text-[10px] font-mono text-white/50 uppercase tracking-[0.15em]">AI Habit Planner • OmniMind</p>
               </div>
             </div>
             

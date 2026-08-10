@@ -170,7 +170,7 @@ function AppInner() {
         setChatMessages(prev => [...prev, { role: 'assistant', content: data.error || 'Errore nella comunicazione con AI' }]);
       }
     } catch {
-      setChatMessages(prev => [...prev, { role: 'assistant', content: 'Connessione ad AI non disponibile. Assicurati che Ollama sia in esecuzione.' }]);
+      setChatMessages(prev => [...prev, { role: 'assistant', content: 'Servizio AI non disponibile. Riprova tra poco.' }]);
     }
     setChatLoading(false);
   };

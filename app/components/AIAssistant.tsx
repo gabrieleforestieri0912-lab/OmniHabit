@@ -1,6 +1,6 @@
 'use client';
 
-import { Bot, MessageCircle } from 'lucide-react';
+import { Bot, Hexagon, MessageCircle } from 'lucide-react';
 import Reveal from './Reveal';
 import type { View } from '../types';
 
@@ -33,20 +33,20 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
           <Reveal delay={120}>
             <div className="inline-flex border-l-2 border-white bg-white/15 px-3 py-1.5 backdrop-blur-md mb-6">
               <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white">
-                AI Assistant
+                OmniMind AI
               </span>
             </div>
           </Reveal>
 
           <Reveal delay={220}>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[0.9] tracking-tighter text-white drop-shadow-lg">
-              Il tuo AI Coach
+              Il tuo <span className="text-white/60">OmniMind</span> Coach
             </h2>
           </Reveal>
 
           <Reveal delay={320}>
             <p className="mt-5 max-w-md text-white/80 leading-relaxed drop-shadow-md">
-              Chatta con Llama 3 per ricevere consigli personalizzati, strategie avanzate e supporto
+              Chatta con OmniMind per ricevere consigli personalizzati, strategie avanzate e supporto
               costante nel tuo percorso di crescita personale.
             </p>
           </Reveal>
@@ -79,24 +79,23 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
         </div>
 
         {/* Right: chat preview */}
-        <Reveal delay={300}>
-          <div className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm overflow-hidden">
+        <Reveal delay={300}>            <div className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm overflow-hidden">
             <div className="flex items-center gap-3 border-b border-white/15 p-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15">
-                <Bot size={18} className="text-white" aria-hidden="true" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-amber-400">
+                <Hexagon size={18} strokeWidth={1.5} className="text-white" aria-hidden="true" />
               </div>
               <div>
-                <div className="text-sm font-medium text-white">AI Assistant</div>
+                <div className="text-sm font-medium text-white">OmniMind</div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/50">
-                  Online · Llama 3
+                  Online · AI Coach
                 </div>
               </div>
             </div>
 
             <div className="space-y-4 p-6">
               <div className="flex gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/15">
-                  <Bot size={14} className="text-white" aria-hidden="true" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-amber-400">
+                  <Hexagon size={14} strokeWidth={1.5} className="text-white" aria-hidden="true" />
                 </div>
                 <div className="rounded-xl bg-white/5 px-4 py-3">
                   <p className="text-sm text-white/80">Ciao! Sono il tuo AI Coach. Come posso aiutarti oggi?</p>
@@ -113,8 +112,8 @@ export default function AIAssistantSection({ onNavigate }: AIAssistantProps) {
               </div>
 
               <div className="flex gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/15">
-                  <Bot size={14} className="text-white" aria-hidden="true" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-amber-400">
+                  <Hexagon size={14} strokeWidth={1.5} className="text-white" aria-hidden="true" />
                 </div>
                 <div className="rounded-xl bg-white/5 px-4 py-3">
                   <p className="text-sm text-white/80">

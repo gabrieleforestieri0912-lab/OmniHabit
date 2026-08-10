@@ -27,7 +27,7 @@ const plans: PricingPlan[] = [
     features: [
       'Fino a 3 abitudini attive',
       'Streak tracking base',
-      'AI Assistant base (5 messaggi/mese)',
+      'OmniMind base (5 messaggi/mese)',
       'Accesso alla Knowledge Base',
       'Dashboard mensile'
     ],
@@ -43,7 +43,7 @@ const plans: PricingPlan[] = [
     features: [
       'Tutto del piano Free',
       'Abitudini illimitate',
-      'AI Assistant avanzato Llama 3',
+      'OmniMind AI avanzato',
       '3 piani personalizzati AI/mese',
       'Export dati CSV',
       'Supporto via email'

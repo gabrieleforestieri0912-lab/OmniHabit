@@ -25,7 +25,7 @@ const features: { icon: LucideIcon; title: string; description: string }[] = [
   {
     icon: Zap,
     title: 'AI Assistant',
-    description: 'Chatta con Llama 3 per ricevere consigli personalizzati sulle tue abitudini.'
+    description: 'Chatta con OmniMind per ricevere consigli personalizzati sulle tue abitudini.'
   },
   {
     icon: Brain,

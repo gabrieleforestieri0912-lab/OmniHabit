@@ -18,7 +18,7 @@ export const faqs: Faq[] = [
   },
   {
     question: "Posso usare l'AI Assistant?",
-    answer: "Certamente! L'AI Assistant basato su Llama 3 è disponibile per tutti gli utenti. Puoi chiedere consigli, ricevere suggerimenti personalizzati e discutere le tue strategie per migliorare le abitudini."
+    answer: "Certamente! OmniMind, l'AI Assistant di OmniHabit, è disponibile per tutti gli utenti. Puoi chiedere consigli, ricevere suggerimenti personalizzati e discutere le tue strategie per migliorare le abitudini."
   },
   {
     question: 'I miei dati sono al sicuro?',
@@ -62,8 +62,8 @@ export const features: Feature[] = [
   },
   {
     icon: 'Zap',
-    title: 'AI Assistant',
-    description: 'Chatta con Llama 3 per ricevere consigli personalizzati sulle tue abitudini.'
+    title: 'OmniMind',
+    description: "Chatta con OmniMind, l'AI coach di OmniHabit, per ricevere consigli personalizzati sulle tue abitudini."
   },
   {
     icon: 'Brain',
@@ -83,9 +83,10 @@ export const features: Feature[] = [
 ];
 
 export const SITE_NAME = 'OmniHabit';
+export const AI_ASSISTANT_NAME = 'OmniMind';
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://omnihabit.it';
 export const SITE_DESCRIPTION =
-  'Domina le tue abitudini con OmniHabit. Il sistema operativo gratuito per la tua evoluzione personale: tracker abitudini, AI Coach con Llama 3 e piani basati su neuroscienza.';
+  'Domina le tue abitudini con OmniHabit. Il sistema operativo gratuito per la tua evoluzione personale: tracker abitudini, AI Coach con OmniMind e piani basati su neuroscienza.';
 export const SITE_KEYWORDS = [
   'tracker abitudini',
   'abitudini',
