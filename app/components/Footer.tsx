@@ -1,7 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Hexagon, Github, Twitter, Mail, Heart, ArrowUp, type LucideIcon } from 'lucide-react';
+import { Hexagon, Github, Twitter, Mail, Heart, type LucideIcon } from 'lucide-react';
 import Reveal from './Reveal';
 import type { View, NavClickHandler } from '../types';
 
@@ -10,10 +9,6 @@ interface FooterProps {
 }
 
 export default function Footer({ onNavClick }: FooterProps) {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const legal: { name: string; view: View | null }[] = [
     { name: 'Privacy Policy', view: 'privacy' },
     { name: 'Termini di Servizio', view: 'terms' },
@@ -115,20 +110,6 @@ export default function Footer({ onNavClick }: FooterProps) {
           </div>
         </div>
       </Reveal>
-
-      {/* Back to top */}
-      <motion.button
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={scrollToTop}
-        className="fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/15 backdrop-blur-md text-white hover:bg-white/25 transition-colors duration-300 cursor-pointer"
-        aria-label="Torna su"
-      >
-        <ArrowUp size={18} aria-hidden="true" />
-      </motion.button>
     </footer>
   );
 }
