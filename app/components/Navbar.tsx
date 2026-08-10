@@ -196,12 +196,20 @@ export default function Navbar({
       initial={{ y: -96, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="fixed left-0 right-0 top-[max(1rem,env(safe-area-inset-top))] z-50 mx-auto w-[calc(100%-2rem)] max-w-5xl"
+      className={`fixed left-0 right-0 z-50 mx-auto w-[calc(100%-1.5rem)] sm:w-[calc(100%-2rem)] max-w-6xl transition-[top] duration-500 ease-out ${
+        scrolled
+          ? 'top-[max(1.75rem,env(safe-area-inset-top))]'
+          : 'top-[max(1rem,env(safe-area-inset-top))]'
+      }`}
     >
-      <div className="rounded-2xl border border-white/10 bg-background/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md">
+      <div
+        className={`rounded-2xl border border-white/10 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(0,0,0,0.7)] transition-colors duration-300 ${
+          scrolled ? 'bg-background/80' : 'bg-background/60'
+        }`}
+      >
         <div
           className={`mx-auto flex items-center justify-between px-5 sm:px-8 transition-all duration-300 ${
-            scrolled ? 'py-3' : 'py-4'
+            scrolled ? 'py-2.5' : 'py-4'
           }`}
         >
           {/* Logo */}
